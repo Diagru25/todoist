@@ -1,0 +1,54 @@
+@import '~antd/dist/antd.css';
+
+:root {
+    --orange-color: #db4c3f;
+    --black-color: #202020;
+    --gray-color: #f0f0f0;
+    --white-color: #ffffff;
+}
+
+
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+body input textarea {
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-size: 13px;
+    background: var(--white-color);
+}
+
+a {
+    text-decoration: none;
+    color: #202020;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    padding: 0;
+    margin: 0;
+}
+
+.main-container {
+    position: relative;
+    margin-left: 302px;
+    padding-top: 44px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+
+    z-index: 2;
+
+    transition: all 0.5s ease-in-out;
+}
+
+.left-menu-hide {
+    margin-left: 0px !important;
+}

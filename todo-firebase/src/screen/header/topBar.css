@@ -1,0 +1,99 @@
+
+
+.topBar {
+    position: fixed;
+    top: 0;
+    height: 44px;
+    width: 100%;
+    padding: 0px 42px;
+    z-index: 3;
+    background: var(--orange-color);
+}
+
+.topBar-inner {
+    width: 100%;
+    height: 43px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topBar-inner .input-header {
+    margin-left: 5px;
+    background: #e27065;
+    color: #fff;
+}
+
+.topBar-inner .input-header input{
+    background: #e27065;
+}
+
+.topBar-inner .input-header:hover,
+.topBar-inner .input-header input:hover
+{
+    background: #fff;
+    color: black;
+}
+
+.topBar-inner .part-left {
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-header {
+    margin-right: 5px;
+    color: #fff;
+
+}
+
+.btn-header:hover {
+    background: #e27065;
+    color: #fff;
+}
+
+/* menu setting */ 
+.menu-setting-container {
+    position: absolute;
+    top: 45px;
+    right: 20px;
+    width: 240px;
+    padding: 5px 10px;
+    margin-top: 5px;
+    border: var(--gray-color) 1px solid;
+}
+
+.menu-setting-container ul {
+    list-style: none;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-setting-container ul li{
+    width: 100%;
+    height: 32px;
+    padding: 4px 10px;
+}
+
+.menu-setting-container ul li:hover {
+    background: var(--gray-color);
+}
+
+.menu-setting-container ul li:nth-child(8) {
+    height: 48px;
+}
+
+.hidden {
+    display: none;
+}
+
+.menu-setting-container .text-small {
+    font-size: 10.5px;
+    color: gray;
+    padding-left: 32px;
+}
+
+
+

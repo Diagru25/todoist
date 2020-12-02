@@ -1,0 +1,102 @@
+.view-header {
+    width: 100%;
+    padding-top: 40px;
+    margin-bottom: 20px;
+}
+
+.view-header .view-header-content {
+    min-width: 800px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.view-header .view-header-content h1 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+}
+.view-header .view-header-actions button {
+    border: none;
+    outline: none;
+    margin-left: 10px;
+}
+
+.view-add-task {
+    width: 100%;
+    border-top: 1px #f0f0f0 solid;
+    padding-top: 10px;
+}
+
+.btn-add-task {
+    background: #ffffff;
+    border: none;
+    outline: none;
+    width: 100%;
+    text-align: left;
+}
+
+.btn-add-task:hover {
+    cursor: pointer;
+    color: var(--orange-color);
+}
+
+.icon-add {
+    color: var(--orange-color);
+    margin-right: 10px;
+}
+
+
+/* box - add */
+.box-add-task {
+    width: 100%;
+    margin: 10px 0px;
+}
+
+.box-add-task .box-add-task-content {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: #f0f0f0 solid 1px;
+}
+
+.box-add-task .box-add-task-content input {
+    width: 100%;
+    margin-bottom: 12px;
+    border: none;
+    outline: none;
+}
+
+.box-add-task .box-add-task-content .add-task-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-task-options > div:nth-child(1) > button{
+    margin-right: 10px;
+    border-radius: 5px;
+}
+.add-task-actions > button {
+    border: none;
+    outline: none;
+    margin-left: 10px;
+}
+
+.btn {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+.box-add-task .btn-add {
+    color: #ffffff;
+    border-radius: 5px;
+    background: var(--orange-color);
+}
+
+.btn-add:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}

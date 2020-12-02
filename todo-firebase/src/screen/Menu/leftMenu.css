@@ -1,0 +1,33 @@
+.menu-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 302px;
+    height: calc(100vh - 44px);
+    background: var(--gray-color);
+
+    padding: 30px 0px 0px 35px;
+    margin-top: 44px;
+
+    transition: all 0.5s ease-in-out;
+}
+
+.left-menu {
+    list-style: none;
+}
+
+
+.left-menu li {
+    line-height: 2;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.left-menu li:hover {
+    background: #ffffff;
+} 
+
+.hiddenn {
+    transform: translateX(-302px);
+}
