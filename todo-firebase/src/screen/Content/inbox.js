@@ -12,12 +12,20 @@ import {
 } from '@ant-design/icons';
 import { Dropdown, Button } from 'antd';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import actions from '../../redux/content/actions'
 
-function Inbox() {
+function Inbox(props) {
 
     const [showAddBox, setShowAddBox] = useState(false)
 
+    useEffect(() => {
+        props.getTasksInbox()
+    },[])
+
+    // console.log('all task in inbox component: ', props.allTask[0])
+    console.log('all task in inbox component: ', props.allTask)
     return (
         <div>
             <header className='view-header'>
@@ -36,7 +44,11 @@ function Inbox() {
                     </div>
                 </div>
             </header>
-            <div className="view-content"></div>
+            <div className="view-content">
+                <ul>
+                    {props.allTask.map(task => <li key={task.key}>{task.name}</li>)}
+                </ul>
+            </div>
             <div className={showAddBox ? "box-add-task" : "box-add-task hidden"}>
                 <div className="box-add-task-content">
                     <div className='add-task-text'>
@@ -77,4 +89,15 @@ function Inbox() {
     )
 }
 
-export default Inbox;
+const mapStateToProps = (state) => {
+    return {
+        allTask: state.contentReducer.allTask
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getTasksInbox: () => dispatch(actions.actions.getTasksInbox())
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Inbox);

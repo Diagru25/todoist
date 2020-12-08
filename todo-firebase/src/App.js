@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import firebase from './firebase';
+import firebase from './helper/firebase';
 
 function App() {
 
@@ -10,17 +10,29 @@ function App() {
     const [curTask, setCurTask] = useState({ key: '', name: '', description: '' });
 
 
-    const db = firebase.ref("/test");
+    const db = firebase.ref("/tasks");
 
     const handleClick = () => {
         let data = {
             name: name,
             description: description
         }
-        db.push(data).then((key) => console.log('Success: ', key.key));
 
-        setName('');
-        setDescription('');
+        let task = {
+            name: 'test 1',
+            schedule: null,
+            time: null,
+            projectID: '',
+            tagID: '',
+            priorityID: '',
+            comment: [],
+            activity: [],
+            subTask: []
+        }
+        db.push(task).then((key) => console.log('Success: ', key.key));
+
+        //setName('');
+        //setDescription('');
     }
 
     const handleDelete = () => {
@@ -48,22 +60,22 @@ function App() {
     }
 
     useEffect(() => {
-        db.on('value', snapshot => {
-            let temp = [];
-            snapshot.forEach(child => {
-                let key = child.key;
-                let val = child.val();
+        // db.on('value', snapshot => {
+        //     let temp = [];
+        //     snapshot.forEach(child => {
+        //         let key = child.key;
+        //         let val = child.val();
 
-                temp.push({
-                    key: key,
-                    name: val.name,
-                    description: val.description
-                });
-            })
+        //         temp.push({
+        //             key: key,
+        //             name: val.name,
+        //             description: val.description
+        //         });
+        //     })
 
-            console.log('temp ', temp)
-            setListTask(temp);
-        })
+        //     console.log('temp ', temp)
+        //     setListTask(temp);
+        // })
     }, [])
 
     const clickChild = (newCur) => {
@@ -80,9 +92,9 @@ function App() {
                 <input type="text" value={description} placeholder="description" onChange={e => setDescription(e.target.value)} />
                 <button onClick={handleClick}>Create</button>
 
-                <ul>
+                {/* <ul>
                     {listTask.map(task => <li key={task.key} onClick={() => clickChild({ key: task.key, name: task.name, description: task.description })}>{task.name}</li>)}
-                </ul>
+                </ul> */}
 
                 <hr />
 
