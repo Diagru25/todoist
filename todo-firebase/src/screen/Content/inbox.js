@@ -16,6 +16,8 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../redux/content/actions'
 
+import Item from './item'
+
 function Inbox(props) {
 
     const [showAddBox, setShowAddBox] = useState(false)
@@ -24,8 +26,6 @@ function Inbox(props) {
         props.getTasksInbox()
     },[])
 
-    // console.log('all task in inbox component: ', props.allTask[0])
-    console.log('all task in inbox component: ', props.allTask)
     return (
         <div>
             <header className='view-header'>
@@ -46,7 +46,7 @@ function Inbox(props) {
             </header>
             <div className="view-content">
                 <ul>
-                    {props.allTask.map(task => <li key={task.key}>{task.name}</li>)}
+                    {props.allTask.map(task => <Item key={task.key} task={task}/>)}
                 </ul>
             </div>
             <div className={showAddBox ? "box-add-task" : "box-add-task hidden"}>
@@ -56,14 +56,14 @@ function Inbox(props) {
                     </div>
                     <div className='add-task-options'>
                         <div>
-                            <Button type='default' icon={<CalendarOutlined />}>Schedule</Button>
-                            <Button type='default' icon={<InboxOutlined style={{ color: '#246fe0' }} />}>Inbox</Button>
+                            <Button type='default' className='btn-view' icon={<CalendarOutlined />}>Schedule</Button>
+                            <Button type='default' className='btn-view' icon={<InboxOutlined style={{ color: '#246fe0' }} />}>Inbox</Button>
                         </div>
                         <div className='add-task-actions'>
-                            <Button icon={<TagOutlined />} />
-                            <Button icon={<FlagOutlined />} />
-                            <Button icon={<ClockCircleOutlined />} />
-                            <Button icon={<MessageOutlined />} />
+                            <Button className='btn-actions' icon={<TagOutlined />} />
+                            <Button className='btn-actions' icon={<FlagOutlined />} />
+                            <Button className='btn-actions' icon={<ClockCircleOutlined />} />
+                            <Button className='btn-actions' icon={<MessageOutlined />} />
                         </div>
                     </div>
 

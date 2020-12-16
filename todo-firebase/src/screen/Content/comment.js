@@ -1,0 +1,47 @@
+import './content.css';
+
+
+const Comment = (props) => {
+
+    console.log('comment: ', props.comments)
+    
+    const showDate = () => {
+        let now = new Date();
+        let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        let date = now.getDate();
+        let day = days[now.getDay()];
+        let month = months[now.getMonth()];
+        let year = now.getFullYear();
+        let time = now.getTime();
+        let hours = now.getHours();
+        let min = now.getMinutes();
+
+        console.log('Date: ', date);
+        console.log('Month: ', month);
+        console.log('Year: ', year);
+        console.log('Day: ', day);
+        console.log('Time: ', time);
+        console.log('Hours: ', hours);
+        console.log('Minutes: ', min);
+
+    }
+
+    return (
+        <div className="comment-container">
+            <div className="view-comment"></div>
+            <div className="add-comment">
+                <div className='add-task-text'>
+                    <input type="text" placeholder='Add a comment' />
+                </div>
+                <hr />
+                <button className='btn btn-add'>
+                    Add comment
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default Comment;

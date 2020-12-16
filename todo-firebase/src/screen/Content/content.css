@@ -46,6 +46,32 @@
     margin-right: 10px;
 }
 
+/* button */
+.btn {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+.btn-view {
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.btn-actions {
+    border: none;
+    outline: none;
+    margin-left: 10px;
+}
+
+.btn-add {
+    color: #ffffff;
+    border-radius: 5px;
+    background: var(--orange-color);
+}
+
+/*-------------------------------------------------------*/
 
 /* box - add */
 .box-add-task {
@@ -74,29 +100,107 @@
     align-items: center;
 }
 
-.add-task-options > div:nth-child(1) > button{
-    margin-right: 10px;
-    border-radius: 5px;
-}
-.add-task-actions > button {
-    border: none;
-    outline: none;
-    margin-left: 10px;
-}
-
-.btn {
-    border: none;
-    outline: none;
-    padding: 5px 10px;
-    font-weight: bold;
-}
-.box-add-task .btn-add {
-    color: #ffffff;
-    border-radius: 5px;
-    background: var(--orange-color);
-}
 
 .btn-add:hover {
     opacity: 0.7;
     cursor: pointer;
+}
+
+/* text effect */
+.item-container {
+    width: 100%;
+    min-height: 70vh;
+    position: relative;
+}
+
+.text-disable {
+    text-decoration: line-through;
+    color: gray;
+}
+
+/* css for list task*/
+.item {
+    padding: 10px 0;
+    border-bottom: #f0f0f0 solid 1px;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item:hover {
+    cursor: pointer;
+    background: #f0f0f0;
+}
+
+.add-task-text {
+    display: inline-block;
+    width: 95%;
+}
+
+.add-task-text > input {
+    width: 100%;
+    margin-bottom: 12px;
+    margin-left: 12px;
+    border: none;
+    outline: none;
+
+    font-size: large;
+}
+
+.item-overview-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tabs {
+    width: 100%;
+    padding: 10px 5px;
+}
+
+.tabs-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tab-item {
+    text-align: center;
+    color: gray;
+}
+
+.tab-item:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.selected {
+    font-weight: bold;
+    color: black;
+    border-bottom: black 1px solid;
+}
+
+.tab-content {
+    width: 100%;
+    height: calc(70vh * 0.60);
+    position: absolute;
+    bottom: 0;
+}
+
+/* tab comment */
+.comment-container {
+    width: 100%;
+    height: 100%;
+}
+.add-comment {
+    width: 100%;
+    border: #f0f0f0 1px solid;
+    border-radius: 8px;
+    padding: 10px;
+
+    position: absolute;
+    bottom: 0;
+}
+
+.add-comment > button {
+    float: right;
 }

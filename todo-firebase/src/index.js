@@ -4,7 +4,7 @@ import App from './screen/app';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
-//import App from './App'
+//import App from './screen/Content/comment';
 
 ReactDOM.render(
   <Provider store={store}>
