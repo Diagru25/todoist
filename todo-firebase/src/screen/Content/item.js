@@ -23,8 +23,9 @@ const Item = (props) => {
             footer={null} 
             visible={isModalVisible} 
             onCancel={() => setModalVisible(false)}
-            width={600}
-            bodyStyle={{height: '80vh'}}
+            width={650}
+            style={{top: 30}}
+            bodyStyle={{height: '800px'}}
         >
             <DetailTask task={props.task}/>
         </Modal>

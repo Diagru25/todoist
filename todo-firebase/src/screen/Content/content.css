@@ -109,8 +109,7 @@
 /* text effect */
 .item-container {
     width: 100%;
-    min-height: 70vh;
-    position: relative;
+    height: 100%;
 }
 
 .text-disable {
@@ -181,9 +180,13 @@
 
 .tab-content {
     width: 100%;
-    height: calc(70vh * 0.60);
-    position: absolute;
-    bottom: 0;
+    height: 75%;
+    position: relative;
+}
+
+.item-header {
+    width: 100%;
+    height: 25%;
 }
 
 /* tab comment */

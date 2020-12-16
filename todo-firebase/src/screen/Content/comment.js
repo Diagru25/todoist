@@ -1,9 +1,8 @@
 import './content.css';
-
+import {Avatar} from 'antd';
+import {UserOutlined} from '@ant-design/icons';
 
 const Comment = (props) => {
-
-    console.log('comment: ', props.comments)
     
     const showDate = () => {
         let now = new Date();
@@ -30,7 +29,23 @@ const Comment = (props) => {
 
     return (
         <div className="comment-container">
-            <div className="view-comment"></div>
+            <div className="view-comment">
+                <ul>
+ 
+                    <li key='1'>
+                        <div className="item-comment">
+                            <Avatar size='large' icon={<UserOutlined/>}/>
+                            <div className="item-comment-detail">
+                                <h1>Someone</h1>
+                                <span>date</span>
+                                <p>Content</p>
+                            </div>
+                        </div>
+                    </li>
+                
+                </ul>
+                
+            </div>
             <div className="add-comment">
                 <div className='add-task-text'>
                     <input type="text" placeholder='Add a comment' />
