@@ -23,8 +23,19 @@ function Inbox(props) {
     const [showAddBox, setShowAddBox] = useState(false)
 
     useEffect(() => {
-        props.getTasksInbox()
+        props.getTasksInbox();
+        props.setDefaultTask();
     },[])
+
+    const addTaskHandle = () => {
+        console.log('Run saveCurrentTask !');
+        props.saveCurrentTask();
+    }
+
+    const onChangeHandle = (e) => {
+        let task = {...props.currentTask, name: e.target.value};
+        props.updateCurrentTask(task);
+    }
 
     return (
         <div>
@@ -52,7 +63,7 @@ function Inbox(props) {
             <div className={showAddBox ? "box-add-task" : "box-add-task hidden"}>
                 <div className="box-add-task-content">
                     <div className='add-task-text'>
-                        <input type="text" placeholder='e.g Read every day' />
+                        <input type="text" placeholder='e.g Read every day' value={props.currentTask.name} onChange={(e) => onChangeHandle(e)}/>
                     </div>
                     <div className='add-task-options'>
                         <div>
@@ -68,7 +79,10 @@ function Inbox(props) {
                     </div>
 
                 </div>
-                <button className='btn btn-add'>
+                <button 
+                    className='btn btn-add'
+                    onClick={addTaskHandle}
+                >
                     Add task
                 </button>
                 <Button type='text'
@@ -91,13 +105,17 @@ function Inbox(props) {
 
 const mapStateToProps = (state) => {
     return {
-        allTask: state.contentReducer.allTask
+        allTask: state.contentReducer.allTask,
+        currentTask: state.contentReducer.currentTask
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getTasksInbox: () => dispatch(actions.actions.getTasksInbox())
+        getTasksInbox: () => dispatch(actions.actions.getTasksInbox()),
+        setDefaultTask: () => dispatch(actions.actions.setDefaultTask()),
+        saveCurrentTask: (task) => dispatch(actions.actions.saveCurrentTask(task)),
+        updateCurrentTask: (task) => dispatch(actions.actions.updateCurrentTask(task))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Inbox);

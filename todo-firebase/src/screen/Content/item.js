@@ -12,10 +12,12 @@ const Item = (props) => {
     return(
         <>
         <div className='item'>
-            <li key = {props.task.key} 
+            <Checkbox></Checkbox>
+            <li key = {props.task.key}
+                className='li-item' 
                 onClick={() => setModalVisible(true)}
             >
-                <Checkbox>{props.task.name}</Checkbox>
+            <span>{props.task.name}</span>
             </li>
         </div>
         <Modal 

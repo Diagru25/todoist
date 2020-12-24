@@ -10,6 +10,10 @@ const api = {
 
     addTaskInbox: (task) => {
         firebase.ref('/tasks').push(task).then(key => console.log('Add task to inbox success: ', key.key))
+    },
+
+    addTask: (task) => {
+        firebase.ref('/tasks').push(task).then(key => console.log('Add task to inbox success: ', key.key))
     }
 }
 

@@ -1,4 +1,4 @@
-import { all, put, takeEvery, fork } from 'redux-saga/effects'
+import { all, put, takeEvery, fork, select } from 'redux-saga/effects'
 
 import actions from './actions'
 import api from '../../helper/api/apiFirebase'
@@ -28,15 +28,32 @@ function* saga_GetAllTasks() {
         })
         console.log('all task saga: ', allTask)
 
-        yield put(actions.actions.updateState({allTask}))
+        yield put(actions.actions.updateState({ allTask }))
     }
     catch (ex) {
         console.log('error: ', ex)
     }
 }
 
+function* saga_SaveCurrentTask() {
+    try {
+        let entity = yield select(state => state.contentReducer.currentTask);
+
+        yield api.addTask(entity);
+
+        yield put(actions.actions.getTasksInbox());
+        yield put(actions.actions.setDefaultTask());
+
+    }
+    catch (ex) {
+        console.log('error: ', ex)
+    }
+
+}
+
 function* listen() {
     yield takeEvery(actions.types.GET_TASKS_INBOX, saga_GetAllTasks)
+    yield takeEvery(actions.types.SAVE_CURRENT_TASK, saga_SaveCurrentTask)
 }
 
 export default function* contentSaga() {

@@ -1,9 +1,13 @@
 import './content.css';
-import {Avatar} from 'antd';
-import {UserOutlined} from '@ant-design/icons';
+import { Avatar, Button } from 'antd';
+import {
+    UserOutlined,
+    DeleteOutlined,
+    EditOutlined
+} from '@ant-design/icons';
 
 const Comment = (props) => {
-    
+
     const showDate = () => {
         let now = new Date();
         let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -25,26 +29,61 @@ const Comment = (props) => {
         console.log('Hours: ', hours);
         console.log('Minutes: ', min);
 
+        return date + ' ' + month + ' ' + hours + ':' + min;
+
     }
 
     return (
         <div className="comment-container">
             <div className="view-comment">
                 <ul>
- 
+
                     <li key='1'>
                         <div className="item-comment">
-                            <Avatar size='large' icon={<UserOutlined/>}/>
+                            <Avatar size='large' icon={<UserOutlined />} />
+                            <div className="box-add-task" style={{width: '90%', margin: '0px'}}>
+                                <div className="box-add-task-content">
+                                    <div className='add-task-text'>
+                                        <input type="text" defaultValue='value follow key of comment' />
+                                    </div>
+
+                                </div>
+                                <button className='btn btn-add'>
+                                    Update
+                                </button>
+                                <Button type='text'>
+                                    Cancel
+                                </Button>
+                            </div>
+                            {/* <div className="item-comment-detail">
+                                <h4>Someone</h4>
+                                <span>{showDate()}</span>
+                                <div className="actions-comment">
+                                    <Button className='btn-actions' icon={<EditOutlined />} />
+                                    <Button className='btn-actions' icon={<DeleteOutlined />} />
+                                </div>
+                                <p>Content</p>
+                            </div> */}
+                        </div>
+                    </li>
+
+                    <li key='1'>
+                        <div className="item-comment">
+                            <Avatar size='large' icon={<UserOutlined />} />
                             <div className="item-comment-detail">
-                                <h1>Someone</h1>
-                                <span>date</span>
+                                <h4>Someone</h4>
+                                <span>{showDate()}</span>
+                                <div className="actions-comment">
+                                    <Button className='btn-actions' icon={<EditOutlined />} />
+                                    <Button className='btn-actions' icon={<DeleteOutlined />} />
+                                </div>
                                 <p>Content</p>
                             </div>
                         </div>
                     </li>
-                
+
                 </ul>
-                
+
             </div>
             <div className="add-comment">
                 <div className='add-task-text'>
