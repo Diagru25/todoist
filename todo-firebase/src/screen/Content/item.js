@@ -5,14 +5,20 @@ import {useState} from 'react';
 
 import DetailTask from './detailTask'
 
+import actions from '../../redux/content/actions'
+import { connect } from 'react-redux';
+
 const Item = (props) => {
 
     const[isModalVisible, setModalVisible] = useState(false)
+    const checkItemHandle = (id) => {
+        props.deleteTask(id);
+    }
 
     return(
         <>
         <div className='item'>
-            <Checkbox></Checkbox>
+            <Checkbox onChange={() => checkItemHandle(props.task.key)}></Checkbox>
             <li key = {props.task.key}
                 className='li-item' 
                 onClick={() => setModalVisible(true)}
@@ -35,4 +41,10 @@ const Item = (props) => {
     )
 }
 
-export default Item
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteTask: (id) => dispatch(actions.actions.deleteTask(id))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Item);

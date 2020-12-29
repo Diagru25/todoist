@@ -14,6 +14,10 @@ const api = {
 
     addTask: (task) => {
         firebase.ref('/tasks').push(task).then(key => console.log('Add task to inbox success: ', key.key))
+    },
+
+    deleteTask: (id) => {
+        firebase.ref('/tasks').child('/' + id).remove().then(() => console.log('delete task success with key: ', id));
     }
 }
 

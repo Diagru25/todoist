@@ -26,7 +26,6 @@ function* saga_GetAllTasks() {
                 subTask: val.subTask
             })
         })
-        console.log('all task saga: ', allTask)
 
         yield put(actions.actions.updateState({ allTask }))
     }
@@ -51,9 +50,21 @@ function* saga_SaveCurrentTask() {
 
 }
 
+function* saga_deleteTask(action) {
+    try{
+        yield api.deleteTask(action.payload.id);
+
+        yield put(actions.actions.getTasksInbox());
+    }
+    catch(ex) {
+        console.log(ex);
+    }
+}
+
 function* listen() {
     yield takeEvery(actions.types.GET_TASKS_INBOX, saga_GetAllTasks)
     yield takeEvery(actions.types.SAVE_CURRENT_TASK, saga_SaveCurrentTask)
+    yield takeEvery(actions.types.DELETE_TASK, saga_deleteTask)
 }
 
 export default function* contentSaga() {

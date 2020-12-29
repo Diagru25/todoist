@@ -14,6 +14,8 @@ const types = {
     UPDATE_CURRENT_TASK: 'UPDATE_TASK',
     SAVE_CURRENT_TASK: 'SAVE_CURRENT_TASK',
 
+    DELETE_TASK: 'DELETE_TASK',
+
     UPDATE_STATE: 'UPDATE_STATE',
 
 
@@ -21,7 +23,6 @@ const types = {
 
 const actions = {
     getTasksInbox: () => {
-        console.log('get task inbox')
         return {
             type: types.GET_TASKS_INBOX,
             payload: {}
@@ -78,6 +79,13 @@ const actions = {
         return {
             type: types.SAVE_CURRENT_TASK,
             payload: {}
+        }
+    },
+
+    deleteTask: id => {
+        return {
+            type: types.DELETE_TASK,
+            payload: {id}
         }
     },
 
