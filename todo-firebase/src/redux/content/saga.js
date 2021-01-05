@@ -37,11 +37,30 @@ function* saga_GetAllTasks() {
 function* saga_SaveCurrentTask() {
     try {
         let entity = yield select(state => state.contentReducer.currentTask);
+        let allTask = yield select(state => state.contentReducer.allTask);
 
-        yield api.addTask(entity);
 
-        yield put(actions.actions.getTasksInbox());
-        yield put(actions.actions.setDefaultTask());
+
+        if (entity.key === '') {
+
+            allTask.push(entity);
+
+            yield api.addTask(entity);
+            yield put(actions.actions.setDefaultTask());
+        }
+        else {
+
+            allTask.forEach((task, index) => {
+                if (task.key === entity.key)
+                    task.name = entity.name;
+            })
+
+            yield api.updateTask(entity);
+            //yield put(actions.actions.setCurrentTask(entity));
+
+        }
+
+        yield put(actions.actions.updateState({ allTask }))
 
     }
     catch (ex) {
@@ -51,12 +70,12 @@ function* saga_SaveCurrentTask() {
 }
 
 function* saga_deleteTask(action) {
-    try{
+    try {
         yield api.deleteTask(action.payload.id);
 
         yield put(actions.actions.getTasksInbox());
     }
-    catch(ex) {
+    catch (ex) {
         console.log(ex);
     }
 }

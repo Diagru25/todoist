@@ -14,6 +14,7 @@ const types = {
     UPDATE_CURRENT_TASK: 'UPDATE_TASK',
     SAVE_CURRENT_TASK: 'SAVE_CURRENT_TASK',
 
+    UPDATE_TASK: 'UPDATE_TASK',
     DELETE_TASK: 'DELETE_TASK',
 
     UPDATE_STATE: 'UPDATE_STATE',
@@ -78,6 +79,13 @@ const actions = {
     saveCurrentTask: task => {
         return {
             type: types.SAVE_CURRENT_TASK,
+            payload: {}
+        }
+    },
+
+    updateTask: () => {
+        return {
+            type: types.UPDATE_TASK,
             payload: {}
         }
     },

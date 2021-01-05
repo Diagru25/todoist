@@ -51,6 +51,8 @@ const reducer = (state = initialState, action) => {
             }
         case actions.types.SAVE_CURRENT_TASK: 
             return state
+        case actions.types.UPDATE_TASK:
+            return state
         case actions.types.DELETE_TASK:
             return state
         case actions.types.ADD_TASK_INBOX:
@@ -60,7 +62,7 @@ const reducer = (state = initialState, action) => {
             return state
         case actions.types.ADD_TASK_UPCOMING:
             return state 
-        case actions.types.UPDATE_STATE: 
+        case actions.types.UPDATE_STATE:
             return {
                 ...state,
                 ...action.payload.state

@@ -18,6 +18,18 @@ const api = {
 
     deleteTask: (id) => {
         firebase.ref('/tasks').child('/' + id).remove().then(() => console.log('delete task success with key: ', id));
+    },
+    updateTask: (task) => {
+        let newData = {
+            name: task.name,
+            priorityID: task.priorityID,
+            projectID: task.projectID,
+            tagID: task.tagID
+        }
+
+        let updates = {};
+        updates[task.key] = newData;
+        firebase.ref('/tasks').update(updates).then(console.log('Update success with id: ', task.key));
     }
 }
 

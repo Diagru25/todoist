@@ -67,7 +67,7 @@ const Comment = (props) => {
                         </div>
                     </li>
 
-                    <li key='1'>
+                    <li key='2'>
                         <div className="item-comment">
                             <Avatar size='large' icon={<UserOutlined />} />
                             <div className="item-comment-detail">

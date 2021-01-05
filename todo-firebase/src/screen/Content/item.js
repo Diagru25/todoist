@@ -21,7 +21,7 @@ const Item = (props) => {
             <Checkbox onChange={() => checkItemHandle(props.task.key)}></Checkbox>
             <li key = {props.task.key}
                 className='li-item' 
-                onClick={() => setModalVisible(true)}
+                onClick={() => {props.updateCurrentTask({...props.task}); setModalVisible(true)}}
             >
             <span>{props.task.name}</span>
             </li>
@@ -43,7 +43,8 @@ const Item = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteTask: (id) => dispatch(actions.actions.deleteTask(id))
+        deleteTask: (id) => dispatch(actions.actions.deleteTask(id)),
+        updateCurrentTask: (task) => dispatch(actions.actions.updateCurrentTask(task))
     }
 }
 
