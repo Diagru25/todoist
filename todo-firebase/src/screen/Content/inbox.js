@@ -30,11 +30,17 @@ function Inbox(props) {
     const addTaskHandle = () => {
         console.log('Run saveCurrentTask !');
         props.saveCurrentTask();
+        setShowAddBox(false);
     }
 
     const onChangeHandle = (e) => {
         let task = {...props.currentTask, name: e.target.value};
         props.updateCurrentTask(task);
+    }
+
+    const showBoxAddHandle = () => {
+        props.setDefaultTask();
+        setShowAddBox(true);
     }
 
     return (
@@ -93,7 +99,7 @@ function Inbox(props) {
             </div>
             <div className={showAddBox ? "view-add-task hidden" : "view-add-task"}>
                 <button className="btn-add-task"
-                    onClick={() => setShowAddBox(true)}
+                    onClick={showBoxAddHandle}
                 >
                     <PlusOutlined className='icon-add' />
                     <span>Add Task</span>

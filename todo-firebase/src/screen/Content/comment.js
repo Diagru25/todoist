@@ -1,108 +1,71 @@
 import './content.css';
-import { Avatar, Button } from 'antd';
-import {
-    UserOutlined,
-    DeleteOutlined,
-    EditOutlined
-} from '@ant-design/icons';
+
 import actions from '../../redux/content/actions'
 import { connect } from 'react-redux';
 import { useState } from 'react';
+import CommentItem from "./commentItem";
 
 const Comment = (props) => {
 
-    const [cmtValue, setCmtValue] = useState('')
+    const [cmtValue, setCmtValue] = useState('');
 
-    const showDate = () => {
-        // let now = new Date();
-        // let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        // let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
 
-        // let date = now.getDate();
-        // let day = days[now.getDay()];
-        // let month = months[now.getMonth()];
-        // let year = now.getFullYear();
-        // let time = now.getTime();
-        // let hours = now.getHours();
-        // let min = now.getMinutes();
+    const getDateNow = () => {
+        let now = new Date();
+        let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        // console.log('Date: ', date);
-        // console.log('Month: ', month);
-        // console.log('Year: ', year);
-        // console.log('Day: ', day);
-        // console.log('Time: ', time);
-        // console.log('Hours: ', hours);
-        // console.log('Minutes: ', min);
+        let date = now.getDate();
+        let day = days[now.getDay()];
+        let month = months[now.getMonth()];
+        let year = now.getFullYear();
+        let time = now.getTime();
+        let hours = now.getHours();
+        let min = now.getMinutes();
 
-        // return date + ' ' + month + ' ' + hours + ':' + min;
+        console.log('Date: ', date);
+        console.log('Month: ', month);
+        console.log('Year: ', year);
+        console.log('Day: ', day);
+        console.log('Time: ', time);
+        console.log('Hours: ', hours);
+        console.log('Minutes: ', min);
+
+        return date + ' ' + month + ' ' + year + ' ' + hours + ':' + min;
 
     }
 
     const addCommentHandle = () => {
+
+
+        let newComment = {
+            content: cmtValue,
+            createDate: getDateNow()
+        }
         let comment = [...props.currentTask.comment];
-        comment.push(cmtValue);
+        comment.push(newComment);
 
         //update curTask
         props.updateCurrentTask({ ...props.currentTask, comment: comment });
         props.saveCurrentTask();
     }
 
+
     return (
         <div className="comment-container">
             <div className="view-comment">
                 <ul>
-
-                    <li key='1'>
-                        <div className="item-comment">
-                            <Avatar size='large' icon={<UserOutlined />} />
-                            <div className="box-add-task" style={{ width: '90%', margin: '0px' }}>
-                                <div className="box-add-task-content">
-                                    <div className='add-task-text'>
-                                        <input type="text" defaultValue='value follow key of comment' />
-                                    </div>
-
-                                </div>
-                                <button className='btn btn-add'>
-                                    Update
-                                </button>
-                                <Button type='text'>
-                                    Cancel
-                                </Button>
-                            </div>
-                            {/* <div className="item-comment-detail">
-                                <h4>Someone</h4>
-                                <span>{showDate()}</span>
-                                <div className="actions-comment">
-                                    <Button className='btn-actions' icon={<EditOutlined />} />
-                                    <Button className='btn-actions' icon={<DeleteOutlined />} />
-                                </div>
-                                <p>Content</p>
-                            </div> */}
-                        </div>
-                    </li>
-
-                    <li key='2'>
-                        <div className="item-comment">
-                            <Avatar size='large' icon={<UserOutlined />} />
-                            <div className="item-comment-detail">
-                                <h4>Someone</h4>
-                                <span>{showDate()}</span>
-                                <div className="actions-comment">
-                                    <Button className='btn-actions' icon={<EditOutlined />} />
-                                    <Button className='btn-actions' icon={<DeleteOutlined />} />
-                                </div>
-                                <p>{props.currentTask.comment[0]}</p>
-
-                            </div>
-                        </div>
-                    </li>
-
+                    {
+                        //console.log(props.currentTask.comment);
+                        props.currentTask.comment.map((comment, index) => <li key={index}><CommentItem comment={comment} index={index}/></li>)
+                    }
                 </ul>
 
             </div>
             <div className="add-comment">
                 <div className='add-task-text'>
-                    <input type="text" placeholder='Add a comment' value={cmtValue} onChange={(e) => setCmtValue(e.target.value)}/>
+                    <input type="text" placeholder='Add a comment' value={cmtValue} onChange={(e) => setCmtValue(e.target.value)} />
                 </div>
                 <hr />
                 <button className='btn btn-add' onClick={addCommentHandle}>
