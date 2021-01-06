@@ -4,7 +4,7 @@ const api = {
     getAllTask: (type) => {
 
         const snapshot = firebase.ref('/tasks').once('value')
-        
+
         return snapshot
     },
 
@@ -13,7 +13,8 @@ const api = {
     },
 
     addTask: (task) => {
-        firebase.ref('/tasks').push(task).then(key => console.log('Add task to inbox success: ', key.key))
+        return firebase.ref('/tasks').push(task);
+        //firebase.ref('/tasks').push(task).then(key => {console.log('Add task to inbox success: ', key.key)})
     },
 
     deleteTask: (id) => {
@@ -22,11 +23,19 @@ const api = {
     updateTask: (task) => {
         let newData = {
             name: task.name,
-            priorityID: task.priorityID,
+            schedule: task.schedule,
+            time: task.time,
             projectID: task.projectID,
-            tagID: task.tagID
+            tagID: task.tagID,
+            priorityID: task.priorityID,
+            isComplete: task.isComplete,
+            comment: [...task.comment],
+            activity: [...task.activity],
+            subTask: task.subTask ? [...task.subTask] : []
+
         }
 
+        console.log('fhsihfsihfisdhiuhfd');
         let updates = {};
         updates[task.key] = newData;
         firebase.ref('/tasks').update(updates).then(console.log('Update success with id: ', task.key));

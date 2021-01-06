@@ -40,19 +40,18 @@ function* saga_SaveCurrentTask() {
         let allTask = yield select(state => state.contentReducer.allTask);
 
 
+        if (entity.key === null) {
 
-        if (entity.key === '') {
-
+            entity.key = yield api.addTask(entity).key;
+            yield put(actions.actions.setDefaultTask());
             allTask.push(entity);
 
-            yield api.addTask(entity);
-            yield put(actions.actions.setDefaultTask());
         }
         else {
-
             allTask.forEach((task, index) => {
                 if (task.key === entity.key)
                     task.name = entity.name;
+                    task.comment = [...entity.comment];
             })
 
             yield api.updateTask(entity);

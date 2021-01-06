@@ -1,17 +1,19 @@
 import api from '../../helper/api/apiFirebase'
 import actions from './actions'
 
+let a = new Date();
 
 const defaultTask = {
-    key:'',
+    key: null,
     name: '',
-    schedule: null,
-    time: null,
+    schedule: '',
+    time: '',
     projectID: '',
     tagID: '',
     priorityID: '',
-    comment: [],
-    activity: [],
+    isComplete: false,
+    comment: ['To go faster, use the keyboard shortcut'],
+    activity: ['Create on 26/9'],
     subTask: [] //many task
 }
 
