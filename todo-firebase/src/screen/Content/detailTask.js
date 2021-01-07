@@ -1,4 +1,3 @@
-import './content.css'
 import { Checkbox, Button, Menu, Dropdown, message } from 'antd';
 import {
     CalendarOutlined,
@@ -18,8 +17,6 @@ import Comment from './comment';
 import actions from '../../redux/content/actions';
 import { useState } from 'react';
 import { connect } from 'react-redux';
-
-
 
 
 const DetailTask = (props) => {

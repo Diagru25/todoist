@@ -49,9 +49,10 @@ function* saga_SaveCurrentTask() {
         }
         else {
             allTask.forEach((task, index) => {
-                if (task.key === entity.key)
+                if (task.key === entity.key){
                     task.name = entity.name;
                     task.comment = [...entity.comment];
+                }     
             })
 
             yield api.updateTask(entity);

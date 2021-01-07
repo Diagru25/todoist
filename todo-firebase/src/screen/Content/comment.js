@@ -9,8 +9,6 @@ const Comment = (props) => {
 
     const [cmtValue, setCmtValue] = useState('');
 
-    
-
     const getDateNow = () => {
         let now = new Date();
         let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -37,8 +35,6 @@ const Comment = (props) => {
     }
 
     const addCommentHandle = () => {
-
-
         let newComment = {
             content: cmtValue,
             createDate: getDateNow()
@@ -46,9 +42,26 @@ const Comment = (props) => {
         let comment = [...props.currentTask.comment];
         comment.push(newComment);
 
-        //update curTask
         props.updateCurrentTask({ ...props.currentTask, comment: comment });
         props.saveCurrentTask();
+
+        setCmtValue('');
+    }
+
+    const keyPressHandle = (e) => {
+        if(e.key === 'Enter') {
+            let newComment = {
+                content: cmtValue,
+                createDate: getDateNow()
+            }
+            let comment = [...props.currentTask.comment];
+            comment.push(newComment);
+
+            props.updateCurrentTask({...props.currentTask, comment: comment});
+            props.saveCurrentTask();
+
+            setCmtValue('');
+        }
     }
 
 
@@ -56,16 +69,18 @@ const Comment = (props) => {
         <div className="comment-container">
             <div className="view-comment">
                 <ul>
-                    {
-                        //console.log(props.currentTask.comment);
-                        props.currentTask.comment.map((comment, index) => <li key={index}><CommentItem comment={comment} index={index}/></li>)
-                    }
+                    {props.currentTask.comment.map((comment, index) => <li key={index}><CommentItem comment={comment} index={index} /></li>)}
                 </ul>
 
             </div>
             <div className="add-comment">
                 <div className='add-task-text'>
-                    <input type="text" placeholder='Add a comment' value={cmtValue} onChange={(e) => setCmtValue(e.target.value)} />
+                    <input type="text" 
+                    placeholder='Add a comment' 
+                    value={cmtValue} 
+                    onChange={(e) => setCmtValue(e.target.value)} 
+                    onKeyPress={keyPressHandle}
+                    />
                 </div>
                 <hr />
                 <button className='btn btn-add' onClick={addCommentHandle}>

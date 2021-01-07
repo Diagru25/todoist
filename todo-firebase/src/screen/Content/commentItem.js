@@ -13,6 +13,29 @@ const CommentItem = (props) => {
     const [isEditCmt, setIsEditCmt] = useState(false);
     const [cmtTxt, setCmtTxt] = useState(props.comment.content);
 
+    const handleUpdateComment = () => {
+        let comments = [...props.currentTask.comment];
+
+        comments.forEach((comment, index) => {
+            if(index === props.index)
+                comment.content = cmtTxt;
+        })
+
+        props.updateCurrentTask({...props.currentTask, comment: comments});
+        props.saveCurrentTask();
+
+        setIsEditCmt(false);
+    }
+
+    const handleDeleteComment = () => {
+        let comments = [...props.currentTask.comment];
+
+        comments.splice(props.index, 1);
+
+        props.updateCurrentTask({...props.currentTask, comment: comments});
+        props.saveCurrentTask();
+    }
+
     return (
         <div>
             <div className="item-comment">
@@ -25,7 +48,7 @@ const CommentItem = (props) => {
                         </div>
 
                     </div>
-                    <button className='btn btn-add'>
+                    <button className='btn btn-add' onClick={handleUpdateComment}>
                         Update
                     </button>
                     <Button type='text' onClick={() => setIsEditCmt(false)}>
@@ -43,7 +66,7 @@ const CommentItem = (props) => {
                         :
                         <div className="actions-comment">
                             <Button className='btn-actions' icon={<EditOutlined />} onClick={() => setIsEditCmt(true)} />
-                            <Button className='btn-actions' icon={<DeleteOutlined />} />
+                            <Button className='btn-actions' icon={<DeleteOutlined />} onClick={handleDeleteComment}/>
                         </div>
                     }
                     <p>{props.comment.content}</p>

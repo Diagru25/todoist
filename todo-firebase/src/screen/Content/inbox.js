@@ -69,7 +69,7 @@ function Inbox(props) {
             <div className={showAddBox ? "box-add-task" : "box-add-task hidden"}>
                 <div className="box-add-task-content">
                     <div className='add-task-text'>
-                        <input type="text" placeholder='e.g Read every day' value={props.currentTask.name} onChange={(e) => onChangeHandle(e)}/>
+                        <input type="text" placeholder='e.g Read every day' value={props.currentTask.name} onChange={onChangeHandle}/>
                     </div>
                     <div className='add-task-options'>
                         <div>
