@@ -4,7 +4,7 @@ import {
     DeleteOutlined,
     EditOutlined
 } from '@ant-design/icons';
-import actions from '../../redux/content/actions'
+import actions from '../../../redux/content/actions';
 import { connect } from 'react-redux';
 import { useState } from 'react';
 
@@ -37,7 +37,7 @@ const CommentItem = (props) => {
     }
 
     return (
-        <div>
+        <li>
             <div className="item-comment">
                 <Avatar size='large' icon={<UserOutlined />} />
 
@@ -73,7 +73,7 @@ const CommentItem = (props) => {
                 </div>
 
             </div>
-        </div>
+        </li>
     );
 };
 

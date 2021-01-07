@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import SubTask from './subTask';
 import Comment from './comment';
+import Activity from './activity';
 import actions from '../../redux/content/actions';
 import { useState } from 'react';
 import { connect } from 'react-redux';
@@ -117,7 +118,7 @@ const DetailTask = (props) => {
         <div className="item-container">
             <div className="item-header">
                 <div className="item-overview-content">
-                    <Checkbox></Checkbox>
+                    <Checkbox style={{borderRadius: '50%'}}></Checkbox>
                     <div className='add-task-text'>
                         <input id={props.task.key} 
                         type="text" 

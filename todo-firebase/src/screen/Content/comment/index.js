@@ -1,6 +1,4 @@
-import './content.css';
-
-import actions from '../../redux/content/actions'
+import actions from '../../../redux/content/actions';
 import { connect } from 'react-redux';
 import { useState } from 'react';
 import CommentItem from "./commentItem";
@@ -69,7 +67,7 @@ const Comment = (props) => {
         <div className="comment-container">
             <div className="view-comment">
                 <ul>
-                    {props.currentTask.comment.map((comment, index) => <li key={index}><CommentItem comment={comment} index={index} /></li>)}
+                    {props.currentTask.comment.map((comment, index) => <CommentItem key={index} comment={comment} index={index} />)}
                 </ul>
 
             </div>
