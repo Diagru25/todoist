@@ -12,29 +12,48 @@ import {
 } from '@ant-design/icons';
 import { Dropdown, Button } from 'antd';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import actions from '../../redux/content/actions'
+import actions from '../../redux/content/actions';
 
-import Item from './item'
+import Item from './item';
+import ScheduleMenu from '../Menu/scheduleMenu';
+import moment from 'moment';
 
 function Inbox(props) {
 
-    const [showAddBox, setShowAddBox] = useState(false)
+    const [showAddBox, setShowAddBox] = useState(false);
+    const [showSchedule, setShowSchedule] = useState(false);
+
+    const ref = useRef(null);
 
     useEffect(() => {
         props.getTasksInbox();
         props.setDefaultTask();
-    },[])
+
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setShowSchedule(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref])
 
     const addTaskHandle = () => {
-        console.log('Run saveCurrentTask !');
+
+        let task = { ...props.currentTask, schedule: moment().subtract(1, 'day').format("D MMM YYYY") };
+
+        props.updateCurrentTask(task);
         props.saveCurrentTask();
         setShowAddBox(false);
     }
 
     const onChangeHandle = (e) => {
-        let task = {...props.currentTask, name: e.target.value};
+        let task = { ...props.currentTask, name: e.target.value };
         props.updateCurrentTask(task);
     }
 
@@ -63,19 +82,25 @@ function Inbox(props) {
             </header>
             <div className="view-content">
                 <ul>
-                    {props.allTask.map(task => <Item key={task.key} task={task}/>)}
+                    {props.allTask.map(task => <Item key={task.key} task={task} />)}
                 </ul>
             </div>
             <div className={showAddBox ? "box-add-task" : "box-add-task hidden"}>
                 <div className="box-add-task-content">
                     <div className='add-task-text'>
-                        <input type="text" placeholder='e.g Read every day' value={props.currentTask.name} onChange={onChangeHandle}/>
+                        <input type="text" placeholder='e.g Read every day' value={props.currentTask.name} onChange={onChangeHandle} />
                     </div>
                     <div className='add-task-options'>
                         <div>
-                            <Button type='default' className='btn-view' icon={<CalendarOutlined />}>Schedule</Button>
+                            <div className='schedule' ref={ref}>
+                                <Button type='default' className='btn-view' onClick={() => setShowSchedule(!showSchedule)} icon={<CalendarOutlined />}>Schedule</Button>
+                                <ScheduleMenu child={showSchedule}/>
+                            </div>
+
                             <Button type='default' className='btn-view' icon={<InboxOutlined style={{ color: '#246fe0' }} />}>Inbox</Button>
+
                         </div>
+
                         <div className='add-task-actions'>
                             <Button className='btn-actions' icon={<TagOutlined />} />
                             <Button className='btn-actions' icon={<FlagOutlined />} />
@@ -85,7 +110,7 @@ function Inbox(props) {
                     </div>
 
                 </div>
-                <button 
+                <button
                     className='btn btn-add'
                     onClick={addTaskHandle}
                 >

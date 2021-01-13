@@ -137,6 +137,13 @@
     margin-left: 10px;
 }
 
+.li-item > p {
+    color: gray;
+    font-size: 12px;
+    padding-top: 5px;
+    margin: 0;
+}
+
 .add-task-text {
     display: inline-block;
     width: 95%;
@@ -246,4 +253,10 @@
 
 .actions-comment > button {
     margin-left: 0;
+}
+
+/* schedule menu */
+.schedule {
+    position: relative;
+    display: inline-block;
 }

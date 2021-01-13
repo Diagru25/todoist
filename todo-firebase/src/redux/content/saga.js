@@ -41,7 +41,6 @@ function* saga_SaveCurrentTask() {
 
 
         if (entity.key === null) {
-
             entity.key = yield api.addTask(entity).key;
             yield put(actions.actions.setDefaultTask());
             allTask.push(entity);

@@ -7,7 +7,7 @@ import DetailTask from './detailTask'
 
 import actions from '../../redux/content/actions'
 import { connect } from 'react-redux';
-
+import moment from 'moment';
 const Item = (props) => {
 
     const[isModalVisible, setModalVisible] = useState(false)
@@ -24,6 +24,7 @@ const Item = (props) => {
                 onClick={() => {props.updateCurrentTask({...props.task}); setModalVisible(true)}}
             >
             <span>{props.task.name}</span>
+            <p>{props.task.schedule}</p>
             </li>
         </div>
         <Modal 
