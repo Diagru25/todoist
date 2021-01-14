@@ -7,10 +7,10 @@ import DetailTask from './detailTask'
 
 import actions from '../../redux/content/actions'
 import { connect } from 'react-redux';
-import moment from 'moment';
+
 const Item = (props) => {
 
-    const[isModalVisible, setModalVisible] = useState(false)
+    const[isModalVisible, setModalVisible] = useState(false);
     const checkItemHandle = (id) => {
         props.deleteTask(id);
     }
@@ -45,6 +45,7 @@ const Item = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteTask: (id) => dispatch(actions.actions.deleteTask(id)),
+        setDefaultTask: () => dispatch(actions.actions.setDefaultTask()),
         updateCurrentTask: (task) => dispatch(actions.actions.updateCurrentTask(task))
     }
 }

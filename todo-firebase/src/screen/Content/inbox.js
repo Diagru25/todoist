@@ -18,7 +18,6 @@ import actions from '../../redux/content/actions';
 
 import Item from './item';
 import ScheduleMenu from '../Menu/scheduleMenu';
-import moment from 'moment';
 
 function Inbox(props) {
 
@@ -44,10 +43,6 @@ function Inbox(props) {
     }, [ref])
 
     const addTaskHandle = () => {
-
-        let task = { ...props.currentTask, schedule: moment().subtract(1, 'day').format("D MMM YYYY") };
-
-        props.updateCurrentTask(task);
         props.saveCurrentTask();
         setShowAddBox(false);
     }
@@ -60,6 +55,11 @@ function Inbox(props) {
     const showBoxAddHandle = () => {
         props.setDefaultTask();
         setShowAddBox(true);
+    }
+
+    const callBackFnc = (chidData) => {
+        console.log('indox data: ', chidData);
+        setShowSchedule(chidData);
     }
 
     return (
@@ -93,8 +93,8 @@ function Inbox(props) {
                     <div className='add-task-options'>
                         <div>
                             <div className='schedule' ref={ref}>
-                                <Button type='default' className='btn-view' onClick={() => setShowSchedule(!showSchedule)} icon={<CalendarOutlined />}>Schedule</Button>
-                                <ScheduleMenu child={showSchedule}/>
+                                <Button type='default' className='btn-view' onClick={() => setShowSchedule(true)} icon={<CalendarOutlined />}>{props.currentTask.schedule || 'Schedule'}</Button>
+                                <ScheduleMenu child={showSchedule} parentCallBack = {callBackFnc}/>
                             </div>
 
                             <Button type='default' className='btn-view' icon={<InboxOutlined style={{ color: '#246fe0' }} />}>Inbox</Button>

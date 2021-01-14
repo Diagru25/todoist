@@ -260,3 +260,8 @@
     position: relative;
     display: inline-block;
 }
+.schedule input {
+    
+    border: none;
+    outline: none;
+}

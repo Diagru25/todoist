@@ -16,13 +16,35 @@ import SubTask from './subTask';
 import Comment from './comment';
 import Activity from './activity';
 import actions from '../../redux/content/actions';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import ScheduleMenu from '../Menu/scheduleMenu';
 
 
 const DetailTask = (props) => {
 
     const [numSelected, setNumSelected] = useState(0);
+    const [showSchedule, setShowSchedule] = useState(false);
+
+    const ref = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setShowSchedule(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref])
+
+    const callBackFnc = (childData) => {
+        setShowSchedule(childData);
+        props.saveCurrentTask();
+    }
 
     const handleMenuClick = (e) => {
         let key = e.key;
@@ -77,15 +99,15 @@ const DetailTask = (props) => {
 
     const handleInputKeyPress = (e) => {
         let keyPress = e.key;
-        if(keyPress === 'Enter')
+        if (keyPress === 'Enter')
             props.saveCurrentTask(props.currentTask);
-        
+
         return;
     }
 
     const handleInputOnChange = (e) => {
         let val = e.target.value;
-        props.updateCurrentTask({...props.currentTask, name: val});
+        props.updateCurrentTask({ ...props.currentTask, name: val });
     }
 
     const menuActions = (
@@ -118,21 +140,28 @@ const DetailTask = (props) => {
         <div className="item-container">
             <div className="item-header">
                 <div className="item-overview-content">
-                    <Checkbox style={{borderRadius: '50%'}}></Checkbox>
+                    <Checkbox style={{ borderRadius: '50%' }}></Checkbox>
                     <div className='add-task-text'>
-                        <input id={props.task.key} 
-                        type="text" 
-                        value={props.currentTask.name} 
-                        className='text-disable' 
-                        placeholder='e.g Read every day'
-                        onBlur={handleInputBlur}
-                        onKeyPress={handleInputKeyPress}
-                        onChange={handleInputOnChange}
-                        readOnly />
+                        <input id={props.task.key}
+                            type="text"
+                            value={props.currentTask.name}
+                            className='text-disable'
+                            placeholder='e.g Read every day'
+                            onBlur={handleInputBlur}
+                            onKeyPress={handleInputKeyPress}
+                            onChange={handleInputOnChange}
+                            readOnly />
                     </div>
                 </div>
-                <div className="item-overview-sub">
-                    <Button type='default' className='btn-view' icon={<CalendarOutlined />}>Schedule</Button>
+                <div className="item-overview-sub schedule" ref={ref}>
+                    <Button type='default'
+                        className='btn-view'
+                        onClick={() => setShowSchedule(!showSchedule)}
+                        icon={<CalendarOutlined />}>
+                        {props.currentTask.schedule || 'schedule'}
+                    </Button>
+
+                    <ScheduleMenu child={showSchedule} parentCallBack={callBackFnc}/>
                 </div>
                 <div className="item-overview-footer">
                     <Button className='btn-actions' icon={<UnorderedListOutlined />} />

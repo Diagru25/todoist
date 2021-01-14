@@ -51,6 +51,7 @@ function* saga_SaveCurrentTask() {
                 if (task.key === entity.key){
                     task.name = entity.name;
                     task.comment = [...entity.comment];
+                    task.schedule = entity.schedule;
                 }     
             })
 
