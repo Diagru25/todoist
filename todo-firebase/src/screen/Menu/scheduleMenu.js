@@ -1,13 +1,15 @@
-import './schedule.css';
+
 import moment from 'moment';
-import { DatePicker } from 'antd';
-import { useEffect, useState } from 'react';
+//import { DatePicker, Calendar } from 'antd';
+import { useState } from 'react';
 import actions from '../../redux/content/actions';
 import { connect } from 'react-redux';
-
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import './schedule.css';
 export const ScheduleMenu = (props) => {
 
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(props.currentTask.schedule);
 
     const handleKeyPress = (e) => {
         console.log('');
@@ -21,14 +23,19 @@ export const ScheduleMenu = (props) => {
     const handleClickOptions = (schedule) => {
         props.updateCurrentTask({ ...props.currentTask, schedule: schedule });
         setDate(schedule);
-        props.parentCallBack(false);
+        //props.parentCallBack(false);
+    }
+
+    const onChangeDate = (value) => {
+        let dateString = moment(value).isValid() ? moment(value).format("DD MMM YYYY") : '';
+        setDate(dateString);
     }
 
     return (
         <div className={props.child ? 'schedule-wrapper' : 'hidden'}>
             <div className="schedule-content">
                 <div className="schedule-input">
-                    <input type="text" placeholder="type a due date" value={date} onChange={(e) => setDate(e.target.value)} onKeyPress={handleKeyPress} />
+                    <input type="text" placeholder="type a due date" value={date} onKeyPress={handleKeyPress} readOnly/>
                 </div>
                 <div className="schedule-options">
                     <div className="schedule-options-item" onClick={() => handleClickOptions(moment().format("DD MMM YYYY"))}>
@@ -69,7 +76,8 @@ export const ScheduleMenu = (props) => {
                     </div>
                 </div>
                 <div className="schedule-calender">
-                    <DatePicker className='select-date' format={'DD MMM YYYY'} />
+                    {/* <DatePicker className='select-date' format={'DD MMM YYYY'} onChange={onChangeDate}/> */}
+                    <Calendar onChange={onChangeDate} value={date !== '' ? moment(date, "DD MMM YYYY").toDate() : moment().toDate()}/>
                 </div>
                 <div className="schedule-time">
                     <span>+ Add time</span>

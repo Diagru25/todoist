@@ -11,8 +11,14 @@ import { connect } from 'react-redux';
 const Item = (props) => {
 
     const[isModalVisible, setModalVisible] = useState(false);
+
     const checkItemHandle = (id) => {
         props.deleteTask(id);
+    }
+
+    const handleCacelModal = () => {
+        props.setDefaultTask();
+        setModalVisible(false);
     }
 
     return(
@@ -31,7 +37,7 @@ const Item = (props) => {
             title='Inbox'
             footer={null} 
             visible={isModalVisible} 
-            onCancel={() => setModalVisible(false)}
+            onCancel={handleCacelModal}
             width={650}
             style={{top: 30}}
             bodyStyle={{height: '800px'}}
