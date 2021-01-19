@@ -3,7 +3,7 @@ import firebase from '../firebase';
 const api = {
     getAllTask: (type) => {
 
-        const snapshot = firebase.ref('/tasks').once('value')
+        const snapshot = firebase.ref('/tasks').once('value');
 
         return snapshot
     },
@@ -35,7 +35,39 @@ const api = {
             curUpdate.child('subTask').set([...task.subtask]).then((key) => console.log('update (subTask) success with key: ', key));
         else
             curUpdate.set(cloneTask).then(console.log('update success comment test'));
-    }
+    },
+
+    // menu (projects, labels, Filters)
+    getAllProjects: () => {
+        return firebase.ref('/projects').once('value');
+    },
+    getAllLabels: () => {
+        return firebase.ref('/labels').once('value');
+    },
+    getAllFilters: () => {
+        return firebase.ref('/filters').once('value');
+    },
+
+    addProject: (entity) => {
+        firebase.ref('/projects').push(entity).then(key => console.log('add project success with key: ', key.key));
+    },
+    addLabel: (entity) => {
+        firebase.ref('/labels').push(entity).then(key => console.log('add project success with key: ', key.key));
+    },
+    addFilter: (entity) => {
+        firebase.ref('/filter').push(entity).then(key => console.log('add project success with key: ', key.key));
+    },
+    
+    deleteProject: (id) => {
+        firebase.ref('/projects/').child(id).remove().then(() => console.log('delete project success with key: ', id));
+    },
+    deleteLabels: (id) => {
+        firebase.ref('/labels/').child(id).remove().then(() => console.log('delete label success with key: ', id));
+    },
+    deleteFilters: (id) => {
+        firebase.ref('/filters/').child(id).remove().then(() => console.log('delete filter success with key: ', id));
+    },
+
 }
 
 export default api;

@@ -89,6 +89,7 @@
     cursor: pointer;
 }
 
+/*react calendar*/
 .react-calendar {
     border: none;
 }
@@ -96,4 +97,6 @@
     cursor: auto;
     text-decoration: none;
 }
+
+
 

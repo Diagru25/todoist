@@ -16,7 +16,7 @@ const Item = (props) => {
         props.deleteTask(id);
     }
 
-    const handleCacelModal = () => {
+    const handleCancelModal = () => {
         props.setDefaultTask();
         setModalVisible(false);
     }
@@ -27,7 +27,8 @@ const Item = (props) => {
             <Checkbox onChange={() => checkItemHandle(props.task.key)}></Checkbox>
             <li key = {props.task.key}
                 className='li-item' 
-                onClick={() => {props.updateCurrentTask({...props.task}); setModalVisible(true)}}
+                onClick={() => {props.updateCurrentTask({...props.task}); 
+                setModalVisible(true)}}
             >
             <span>{props.task.name}</span>
             <p>{props.task.schedule}</p>
@@ -37,7 +38,7 @@ const Item = (props) => {
             title='Inbox'
             footer={null} 
             visible={isModalVisible} 
-            onCancel={handleCacelModal}
+            onCancel={handleCancelModal}
             width={650}
             style={{top: 30}}
             bodyStyle={{height: '800px'}}

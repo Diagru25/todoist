@@ -1,3 +1,5 @@
+@import 'antd/dist/antd.css';
+
 .menu-wrapper {
     position: fixed;
     top: 0;
@@ -5,7 +7,7 @@
     z-index: 2;
     width: 302px;
     height: calc(100vh - 44px);
-    background: var(--gray-color);
+    background: var(--gray-light-color);
 
     padding: 30px 0px 0px 35px;
     margin-top: 44px;
@@ -31,3 +33,50 @@
 .hiddenn {
     transform: translateX(-302px);
 }
+
+.extra-icon:hover {
+    color: var(--orange-color);
+}
+
+/* customs antd */
+.ant-collapse-item {
+    background: var(--gray-light-color);
+}
+.ant-collapse-header:hover {
+    background: var(--gray-color);
+}
+.ant-collapse-header {
+    padding: 10px 5px 10px 32px !important;
+    font-weight: bold;
+}
+
+.ant-collapse-header > span {
+    left: 5px !important;
+    top: 15px !important;
+}
+/**/
+/* modal */
+.form-item {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.form-item > p {
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-item > input {
+    width: 100%;
+    border: solid 1px #d9d9d9;
+    border-radius: 4px;
+}
+.form-item > input:hover {
+    border: solid 1px var(--shadow-color);
+}
+.form-item > input:focus {
+    border: solid 1px var(--shadow-color) !important;
+    box-shadow: 0 0 3px var(--shadow-color) !important;
+    outline: none;
+}
+

@@ -8,6 +8,7 @@ const types = {
     ADD_TASK_INBOX: 'ADD_TASK_INBOX',
     ADD_TASK_TODAY: 'ADD_TASK_TODAY',
     ADD_TASK_UPCOMING: 'ADD_TASK_UPCOMING',
+    //
 
     SET_DEFAULT_TASK: 'SET_DEFAULT_TASK',
     SET_CURRENT_TASK: 'SET_CURRENT_TASK',
@@ -16,6 +17,10 @@ const types = {
 
     UPDATE_TASK: 'UPDATE_TASK',
     DELETE_TASK: 'DELETE_TASK',
+
+    ADD_PROJECT: 'ADD_PROJECT',
+    ADD_LABEL: 'ADD_LABEL',
+    ADD_FILTER: 'ADD_FILTER',
 
     UPDATE_STATE: 'UPDATE_STATE',
 
@@ -94,6 +99,15 @@ const actions = {
         return {
             type: types.DELETE_TASK,
             payload: {id}
+        }
+    },
+
+    addProject: (entity) => {
+        return {
+            type: types.ADD_PROJECT,
+            payload: {
+                entity
+            }
         }
     },
 
