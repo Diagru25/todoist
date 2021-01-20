@@ -13,7 +13,7 @@ import Today from './Content/today';
 import Upcoming from './Content/upcoming';
 
 import {connect} from 'react-redux';
-import {actions} from '../redux/Menu/actions';
+import actions from '../redux/Menu/actions';
 
 function MainApp(props) {
     return (
@@ -45,7 +45,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        toggle_menu_setting: (isBtn) => dispatch(actions.menuSettingToggle(isBtn))
+        toggle_menu_setting: (isBtn) => dispatch(actions.actions.menuSettingToggle(isBtn))
     }
 }
 

@@ -56,7 +56,6 @@ const reducer = (state = initialState, action) => {
         case actions.types.DELETE_TASK:
             return state
         case actions.types.ADD_TASK_INBOX:
-            api.addTaskInbox(action.payload)
             return state
         case actions.types.ADD_TASK_TODAY:
             return state

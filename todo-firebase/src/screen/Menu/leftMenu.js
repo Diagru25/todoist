@@ -4,12 +4,13 @@ import { InboxOutlined, ScheduleOutlined, CalendarOutlined, PlusOutlined } from 
 import { Button, Collapse, Modal } from "antd";
 import { connect } from 'react-redux';
 import { useState } from 'react';
-import actions from '../../redux/content/actions';
+import actions from '../../redux/Menu/actions';
 
 function LeftMenu(props) {
 
     const [isShowModal, setIsShowModal] = useState('');
-    const [obj, setObj] = useState({name: '', description: ''});
+    const [project, setProject] = useState({ name: '', description: '' });
+    const [label, setLabel] = useState({ name: '', description: '' });
 
     const genExtra = (extraName) => (
         <PlusOutlined
@@ -23,15 +24,61 @@ function LeftMenu(props) {
 
     const onCancelHandle = () => {
         setIsShowModal('');
-        setObj({name: '', description: ''});
+        setProject({ name: '', description: '' });
+        setLabel({ name: '', description: '' });
+
     }
 
     const onSaveHandle = () => {
-        
-        props.addProject(obj);
         setIsShowModal('');
-        setObj({name: '', description: ''});
 
+        switch (isShowModal) {
+            case 'projects':
+                props.addProject(project);
+                setProject({ name: '', description: '' });
+                break;
+
+            case 'labels':
+                props.addLabel(label);
+                setLabel({ name: '', description: '' });
+                break;
+
+            default: break;
+        }
+    }
+
+    const modalContent = () => {
+
+        switch (isShowModal) {
+            case 'projects':
+                return (
+                    <div>
+                        <div className="form-item">
+                            <p>Name:</p>
+                            <input type="text" value={project.name} onChange={(e) => setProject({ ...project, name: e.target.value })} />
+                        </div>
+                        <div className="form-item">
+                            <p>Description:</p>
+                            <input type="text" value={project.description} onChange={(e) => setProject({ ...project, description: e.target.value })} />
+                        </div>
+                    </div>
+                );
+            case 'labels':
+                return (
+                    <div>
+                        <div className="form-item">
+                            <p>Name:</p>
+                            <input type="text" value={label.name} onChange={(e) => setLabel({ ...label, name: e.target.value })} />
+                        </div>
+                        <div className="form-item">
+                            <p>Description:</p>
+                            <input type="text" value={label.description} onChange={(e) => setLabel({ ...label, description: e.target.value })} />
+                        </div>
+                    </div>
+                )
+            default:
+                return <div></div>
+        }
     }
 
     return (
@@ -93,14 +140,9 @@ function LeftMenu(props) {
                     </>
                 }
             >
-                <div className="form-item">
-                    <p>Name:</p>
-                    <input type="text" value={obj.name} onChange={(e) => setObj({...obj, name: e.target.value})}/>
-                </div>
-                <div className="form-item">
-                    <p>Description:</p>
-                    <input type="text" value={obj.description} onChange={(e) => setObj({...obj, description: e.target.value})}/>
-                </div>
+                {
+                    modalContent()
+                }
             </Modal>
         </div>
     )
@@ -114,7 +156,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addProject: (entity) => dispatch(actions.actions.addProject(entity))
+        addProject: (entity) => dispatch(actions.actions.addProject(entity)),
+        addLabel: (entity) => dispatch(actions.actions.addLabel(entity))
     }
 }
 

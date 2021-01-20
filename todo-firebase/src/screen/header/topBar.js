@@ -27,7 +27,7 @@ import { Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {actions} from '../../redux/Menu/actions';
+import actions from '../../redux/Menu/actions';
 
 function TopBar(props) {
 
@@ -213,8 +213,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        toggle_menu: () => dispatch(actions.menuToggle()),
-        toggle_menu_setting: () => dispatch(actions.menuSettingToggle())
+        toggle_menu: () => dispatch(actions.actions.menuToggle()),
+        toggle_menu_setting: () => dispatch(actions.actions.menuSettingToggle())
     }
 };
 

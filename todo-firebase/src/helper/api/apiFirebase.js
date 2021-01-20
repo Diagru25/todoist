@@ -49,10 +49,10 @@ const api = {
     },
 
     addProject: (entity) => {
-        firebase.ref('/projects').push(entity).then(key => console.log('add project success with key: ', key.key));
+        return firebase.ref('/projects').push(entity);
     },
     addLabel: (entity) => {
-        firebase.ref('/labels').push(entity).then(key => console.log('add project success with key: ', key.key));
+        return firebase.ref('/labels').push(entity);
     },
     addFilter: (entity) => {
         firebase.ref('/filter').push(entity).then(key => console.log('add project success with key: ', key.key));

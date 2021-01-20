@@ -57,7 +57,6 @@ function* saga_SaveCurrentTask() {
 
             yield api.updateTask(entity);
             //yield put(actions.actions.setCurrentTask(entity));
-
         }
 
         yield put(actions.actions.updateState({ allTask }))
@@ -80,21 +79,11 @@ function* saga_deleteTask(action) {
     }
 }
 
-function* saga_addProject(action) {
-    try {
-        yield api.addProject(action.payload.entity);
-
-    }
-    catch (ex) {
-        console.log(ex);
-    }
-}
 
 function* listen() {
     yield takeEvery(actions.types.GET_TASKS_INBOX, saga_GetAllTasks)
     yield takeEvery(actions.types.SAVE_CURRENT_TASK, saga_SaveCurrentTask)
     yield takeEvery(actions.types.DELETE_TASK, saga_deleteTask)
-    yield takeEvery(actions.types.ADD_PROJECT, saga_addProject)
 }
 
 export default function* contentSaga() {

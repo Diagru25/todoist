@@ -18,10 +18,6 @@ const types = {
     UPDATE_TASK: 'UPDATE_TASK',
     DELETE_TASK: 'DELETE_TASK',
 
-    ADD_PROJECT: 'ADD_PROJECT',
-    ADD_LABEL: 'ADD_LABEL',
-    ADD_FILTER: 'ADD_FILTER',
-
     UPDATE_STATE: 'UPDATE_STATE',
 
 
@@ -99,15 +95,6 @@ const actions = {
         return {
             type: types.DELETE_TASK,
             payload: {id}
-        }
-    },
-
-    addProject: (entity) => {
-        return {
-            type: types.ADD_PROJECT,
-            payload: {
-                entity
-            }
         }
     },
 
