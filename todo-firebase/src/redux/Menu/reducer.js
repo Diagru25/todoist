@@ -24,25 +24,80 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-    switch(action.type) {
-        case actions.types.MENU_TOGGLE: 
-            return {...state, show_menu: !state.show_menu}
+    switch (action.type) {
+        case actions.types.MENU_TOGGLE:
+            return { ...state, show_menu: !state.show_menu }
 
         case actions.types.MENU_SETTING_TOGGLE:
-            if(action.payload.isBtn)
-                return {...state, show_setting_menu: !state.show_setting_menu}
-            else if(!action.payload.isBtn && state.show_setting_menu) {
-                return {...state, show_setting_menu: false}
+            if (action.payload.isBtn)
+                return { ...state, show_setting_menu: !state.show_setting_menu }
+            else if (!action.payload.isBtn && state.show_setting_menu) {
+                return { ...state, show_setting_menu: false }
             }
             return state
-        
+
         case actions.types.UPDATE_STATE:
-            return{
+            return {
                 ...state,
                 ...action.payload.state
             }
 
-        default: 
+        case actions.types.SET_DEFAULT_PROJECT:
+            return {
+                ...state,
+                ...{
+                    currentProject: defaultProject
+                }
+            }
+
+        case actions.types.UPDATE_CURRENT_PROJECT:
+            return {
+                ...state,
+                ...{
+                    currentProject: {
+                        ...state.currentProject,
+                        ...action.payload.project
+                    }
+                }
+            }
+
+        case actions.types.SET_CURRENT_PROJECT:
+            return {
+                ...state,
+                ...{
+                    currentProject: action.payload.project
+                }
+            }
+
+        case actions.types.SET_DEFAULT_LABEL:
+            return {
+                ...state,
+                ...{
+                    currentLabel: defaultLabel
+                }
+            }
+        
+        case actions.types.SET_CURRENT_LABEL: 
+            return {
+                ...state,
+                ...{
+                    currentLabel: action.payload.label
+                }
+            }
+
+        case actions.types.UPDATE_CURRENT_LABEL: {
+            return {
+                ...state,
+                ...{
+                    currentLabel: {
+                        ...state.currentLabel,
+                        ...action.payload.label
+                    }
+                }
+            }
+        }
+
+        default:
             return state
     }
 }
