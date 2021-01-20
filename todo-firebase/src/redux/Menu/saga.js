@@ -4,17 +4,19 @@ import api from '../../helper/api/apiFirebase';
 import { message } from "antd";
 
 
-function* saga_addProject(action) {
+function* saga_saveProject() {
     try {
         let all_project = yield select(state => state.menuReducer.all_project);
+        let entity = yield select(state => state.menuReducer.currentProject);
 
-        let key = yield api.addProject(action.payload.entity).key;
-        all_project.push({...action.payload.entity, id: key});
+        entity.key = yield api.addProject(entity).key;
+        all_project.push(entity);
         
-
         yield put(actions.actions.updateState({all_project}));
 
-        message.info('add project success: ' + key);
+        yield put(actions.actions.setDefaultProject());
+
+        message.info('Add project success: ' + entity.key);
     }
     catch (ex) {
         console.log(ex);
@@ -38,7 +40,7 @@ function* saga_addLabel(action) {
 }
 
 function* listen() {
-    yield takeEvery(actions.types.ADD_PROJECT, saga_addProject)
+    yield takeEvery(actions.types.SAVE_CURRENT_PROJECT, saga_saveProject)
     yield takeEvery(actions.types.ADD_LABEL, saga_addLabel)
 }
 

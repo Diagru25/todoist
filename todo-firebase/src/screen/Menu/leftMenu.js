@@ -4,12 +4,15 @@ import { InboxOutlined, ScheduleOutlined, CalendarOutlined, PlusOutlined } from 
 import { Button, Collapse, Modal } from "antd";
 import { connect } from 'react-redux';
 import { useState } from 'react';
+
+import ModalProject from './Modal/project';
+
 import actions from '../../redux/Menu/actions';
+
 
 function LeftMenu(props) {
 
     const [isShowModal, setIsShowModal] = useState('');
-    const [project, setProject] = useState({ name: '', description: '' });
     const [label, setLabel] = useState({ name: '', description: '' });
 
     const genExtra = (extraName) => (
@@ -24,8 +27,9 @@ function LeftMenu(props) {
 
     const onCancelHandle = () => {
         setIsShowModal('');
-        setProject({ name: '', description: '' });
         setLabel({ name: '', description: '' });
+
+        props.setDefaultProject();
 
     }
 
@@ -34,8 +38,7 @@ function LeftMenu(props) {
 
         switch (isShowModal) {
             case 'projects':
-                props.addProject(project);
-                setProject({ name: '', description: '' });
+                props.saveCurrentProject();
                 break;
 
             case 'labels':
@@ -51,18 +54,7 @@ function LeftMenu(props) {
 
         switch (isShowModal) {
             case 'projects':
-                return (
-                    <div>
-                        <div className="form-item">
-                            <p>Name:</p>
-                            <input type="text" value={project.name} onChange={(e) => setProject({ ...project, name: e.target.value })} />
-                        </div>
-                        <div className="form-item">
-                            <p>Description:</p>
-                            <input type="text" value={project.description} onChange={(e) => setProject({ ...project, description: e.target.value })} />
-                        </div>
-                    </div>
-                );
+                return <ModalProject/>
             case 'labels':
                 return (
                     <div>
@@ -156,8 +148,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addProject: (entity) => dispatch(actions.actions.addProject(entity)),
-        addLabel: (entity) => dispatch(actions.actions.addLabel(entity))
+        saveCurrentProject: () => dispatch(actions.actions.saveCurrentProject()),
+        setDefaultProject: () => dispatch(actions.actions.setDefaultProject())
     }
 }
 

@@ -3,7 +3,7 @@ const types = {
     MENU_SETTING_TOGGLE: 'MENU_SETTING_TOGGLE',
 
     GET_ALL_PROJECT: 'GET_ALL_PROJECT',
-    ADD_PROJECT: 'ADD_PROJECT',
+    SAVE_CURRENT_PROJECT: 'SAVE_CURRENT_PROJECT',
     DELETE_PROJECT: 'DELETE_PROJECT',
     SET_DEFAULT_PROJECT: 'SET_DEFAULT_PROJECT',
     SET_CURRENT_PROJECT: 'SET_CURRENT_PROJECT',
@@ -34,9 +34,9 @@ const actions = {
         }
     },
 
-    addProject: (entity) => {
+    saveCurrentProject: (entity) => {
         return {
-            type: types.ADD_PROJECT,
+            type: types.SAVE_CURRENT_PROJECT,
             payload: {
                 entity
             }
@@ -61,14 +61,14 @@ const actions = {
 
     setDefaultLabel: () => {
         return {
-            types: types.SET_DEFAULT_LABEL,
+            type: types.SET_DEFAULT_LABEL,
             payload: {}
         }
     },
 
     setCurrentProject: (project) => {
         return {
-            types: types.SET_CURRENT_PROJECT,
+            type: types.SET_CURRENT_PROJECT,
             payload: {
                 project
             }
@@ -77,7 +77,7 @@ const actions = {
 
     setCurrentLabel: (label) => {
         return {
-            types: types.SET_CURRENT_LABEL,
+            type: types.SET_CURRENT_LABEL,
             payload: {
                 label
             }
@@ -86,7 +86,7 @@ const actions = {
 
     updateCurrentProject: (project) => {
         return {
-            types: types.UPDATE_CURRENT_PROJECT,
+            type: types.UPDATE_CURRENT_PROJECT,
             payload: {
                 project
             }
@@ -95,7 +95,7 @@ const actions = {
 
     updateCurrentLabel: (label) => {
         return {
-            types: types.UPDATE_CURRENT_LABEL,
+            type: types.UPDATE_CURRENT_LABEL,
             payload: {
                 label
             }

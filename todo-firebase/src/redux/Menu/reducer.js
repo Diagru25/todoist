@@ -69,6 +69,9 @@ const reducer = (state = initialState, action) => {
                 }
             }
 
+        case actions.types.SAVE_CURRENT_PROJECT:
+            return {...state}
+
         case actions.types.SET_DEFAULT_LABEL:
             return {
                 ...state,
