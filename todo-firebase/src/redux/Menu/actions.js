@@ -10,7 +10,7 @@ const types = {
     UPDATE_CURRENT_PROJECT: 'UPDATE_CURRENT_PROJECT',
 
     GET_ALL_LABEL: 'GET_ALL_LABEL',
-    ADD_LABEL: 'ADD_LABEL',
+    SAVE_CURRENT_LABEL: 'SAVE_CURRENT_LABEL',
     DELETE_LABEL: 'DELETE_LABEL',
     SET_DEFAULT_LABEL: 'SET_DEFAULT_LABEL',
     SET_CURRENT_LABEL: 'SET_CURRENT_LABEL',
@@ -34,6 +34,20 @@ const actions = {
         }
     },
 
+    getAllProject: () => {
+        return {
+            type: types.GET_ALL_PROJECT,
+            payload: {}
+        }
+    },
+
+    getAllLabel: () => {
+        return {
+            type: types.GET_ALL_LABEL,
+            payload: {}
+        }
+    },
+
     saveCurrentProject: (entity) => {
         return {
             type: types.SAVE_CURRENT_PROJECT,
@@ -43,9 +57,9 @@ const actions = {
         }
     },
     
-    addLabel: (entity) => {
+    saveCurrentLabel: (entity) => {
         return {
-            type: types.ADD_LABEL,
+            type: types.SAVE_CURRENT_LABEL,
             payload: {
                 entity
             }
@@ -98,6 +112,24 @@ const actions = {
             type: types.UPDATE_CURRENT_LABEL,
             payload: {
                 label
+            }
+        }
+    },
+
+    deleteProject: (id) => {
+        return {
+            type: types.DELETE_PROJECT,
+            payload: {
+                id
+            }
+        }
+    },
+
+    deleteLabel: (id) => {
+        return {
+            type: types.DELETE_LABEL,
+            payload: {
+                id
             }
         }
     },

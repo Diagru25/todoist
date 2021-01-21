@@ -6,9 +6,9 @@ import api from '../../helper/api/apiFirebase'
 function* saga_GetAllTasks() {
 
     try {
-        const listTask = yield api.getAllTask();
+        let listTask = yield api.getAllTask();
 
-        const allTask = [];
+        let allTask = [];
         listTask.forEach(child => {
             let key = child.key;
             let val = child.val();

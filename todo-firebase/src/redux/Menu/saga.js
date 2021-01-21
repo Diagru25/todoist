@@ -16,32 +16,102 @@ function* saga_saveProject() {
 
         yield put(actions.actions.setDefaultProject());
 
-        message.info('Add project success: ' + entity.key);
+        message.success('Add project success: ' + entity.key);
     }
     catch (ex) {
         console.log(ex);
     }
 }
 
-function* saga_addLabel(action) {
+function* saga_saveLabel() {
     try {
         let all_label = yield select(state => state.menuReducer.all_label);
+        let entity = yield select(state => state.menuReducer.currentLabel);
 
-        let key = yield api.addProject(action.payload.entity).key;
-        all_label.push({...action.payload.entity, id: key});
+        entity.key = yield api.addLabel(entity).key;
+        all_label.push(entity);
 
         yield put(actions.actions.updateState({all_label}));
+        yield put(actions.actions.setDefaultLabel());
 
-        message.info('add label success: ' + key);
+        message.success('Add label success: ' + entity.key);
     }
     catch (ex) {
         console.log(ex);
+    }
+}
+
+function* saga_getAllProject() {
+    try {
+        let snapShot = yield api.getAllProjects();
+        let all_project = [];
+
+        snapShot.forEach(child => {
+            let key = child.key;
+            let project = child.val();
+
+            all_project.push({...project, key})
+        })
+
+        yield put(actions.actions.updateState({all_project}));
+    }
+    catch(ex) {
+        console.log(ex);
+    }
+}
+
+function* saga_getAllLabel() {
+    try {
+        let snapShot = yield api.getAllLabels();
+        let all_label = [];
+
+        snapShot.forEach(child => {
+            let key = child.key;
+            let label = child.val();
+
+            all_label.push({...label, key})
+        })
+
+        yield put(actions.actions.updateState({all_label}));
+    }
+    catch(ex) {
+        console.log(ex);
+    }
+}
+
+function* saga_deleteProject(action) {
+    try {
+        yield api.deleteProject(action.payload.id);
+
+        yield put(actions.actions.getAllProject());
+
+        message.success("Delete project: " + action.payload.id);
+    }   
+    catch(ex) {
+        console.log(ex)
+    }
+}
+
+function* saga_deleteLabel(action) {
+    try {
+        yield api.deleteLabels(action.payload.id);
+
+        yield put(actions.actions.getAllLabel());
+
+        message.success("Delete label: " + action.payload.id);
+    }   
+    catch(ex) {
+        console.log(ex)
     }
 }
 
 function* listen() {
     yield takeEvery(actions.types.SAVE_CURRENT_PROJECT, saga_saveProject)
-    yield takeEvery(actions.types.ADD_LABEL, saga_addLabel)
+    yield takeEvery(actions.types.SAVE_CURRENT_LABEL, saga_saveLabel)
+    yield takeEvery(actions.types.GET_ALL_PROJECT, saga_getAllProject)
+    yield takeEvery(actions.types.GET_ALL_LABEL, saga_getAllLabel)
+    yield takeEvery(actions.types.DELETE_PROJECT, saga_deleteProject)
+    yield takeEvery(actions.types.DELETE_LABEL, saga_deleteLabel)
 }
 
 export default function* menuSaga() {

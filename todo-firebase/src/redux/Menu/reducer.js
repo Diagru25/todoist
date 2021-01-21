@@ -99,6 +99,11 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
+        case actions.types.DELETE_PROJECT: 
+            return state
+
+        case actions.types.SAVE_CURRENT_LABEL:
+            return {...state}
 
         default:
             return state

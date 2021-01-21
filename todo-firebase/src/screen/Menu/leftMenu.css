@@ -34,11 +34,18 @@
     transform: translateX(-302px);
 }
 
+.extra-icon {
+    margin-right: 7px;
+}
+
 .extra-icon:hover {
     color: var(--orange-color);
 }
 
 /* customs antd */
+.ant-collapse-content-box {
+    padding-right: 5px !important;
+}
 .ant-collapse-item {
     background: var(--gray-light-color);
 }
@@ -78,5 +85,26 @@
     border: solid 1px var(--shadow-color) !important;
     box-shadow: 0 0 3px var(--shadow-color) !important;
     outline: none;
+}
+
+/*list project/label */
+.option-left-menu {
+    font-weight: normal;
+}
+
+.option-left-menu > ul > li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 17px;
+}
+.option-left-menu > ul > li:hover {
+    cursor: pointer;
+    background: #ffffff;
+}
+.option-left-menu > ul > li > button {
+    border: none;
+    outline: none;
+    background: var(--gray-light-color);
 }
 

@@ -1,11 +1,14 @@
 import './leftMenu.css';
-import { Link } from 'react-router-dom';
-import { InboxOutlined, ScheduleOutlined, CalendarOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Modal } from "antd";
+
+import { InboxOutlined, ScheduleOutlined, CalendarOutlined, PlusOutlined, EditOutlined, DeleteOutlined, MoreOutlined } from '@ant-design/icons';
+import { Button, Collapse, Modal, Dropdown, Menu } from "antd";
+
 import { connect } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import ModalProject from './Modal/project';
+import ModalLabel from './Modal/label';
 
 import actions from '../../redux/Menu/actions';
 
@@ -13,7 +16,12 @@ import actions from '../../redux/Menu/actions';
 function LeftMenu(props) {
 
     const [isShowModal, setIsShowModal] = useState('');
-    const [label, setLabel] = useState({ name: '', description: '' });
+
+
+    useEffect(() => {
+        props.getAllProject();
+        props.getAllLabel();
+    }, [])
 
     const genExtra = (extraName) => (
         <PlusOutlined
@@ -26,11 +34,9 @@ function LeftMenu(props) {
     );
 
     const onCancelHandle = () => {
-        setIsShowModal('');
-        setLabel({ name: '', description: '' });
-
         props.setDefaultProject();
-
+        props.setDefaultLabel();
+        setIsShowModal('');
     }
 
     const onSaveHandle = () => {
@@ -42,8 +48,7 @@ function LeftMenu(props) {
                 break;
 
             case 'labels':
-                props.addLabel(label);
-                setLabel({ name: '', description: '' });
+                props.saveCurrentLabel();
                 break;
 
             default: break;
@@ -54,23 +59,21 @@ function LeftMenu(props) {
 
         switch (isShowModal) {
             case 'projects':
-                return <ModalProject/>
+                return <ModalProject />
             case 'labels':
-                return (
-                    <div>
-                        <div className="form-item">
-                            <p>Name:</p>
-                            <input type="text" value={label.name} onChange={(e) => setLabel({ ...label, name: e.target.value })} />
-                        </div>
-                        <div className="form-item">
-                            <p>Description:</p>
-                            <input type="text" value={label.description} onChange={(e) => setLabel({ ...label, description: e.target.value })} />
-                        </div>
-                    </div>
-                )
+                return <ModalLabel />
             default:
                 return <div></div>
         }
+    }
+
+    const onDeleteHandle = (type, id) => {
+        if (type === 'projects')
+            props.deleteProject(id);
+        else if (type === 'labels')
+            props.deleteLabel(id);
+        else
+            return;
     }
 
     return (
@@ -103,13 +106,69 @@ function LeftMenu(props) {
             </ul>
             <Collapse bordered={false}>
                 <Collapse.Panel header="Projects" key="projects" extra={genExtra('projects')}>
-                    <div className="option-left-menu" style={{ fontWeight: 'normal' }}>
-                        <Link to='/app/projects'>ABC</Link>
+                    <div className="option-left-menu">
+                        <ul>
+                            {
+                                props.all_project
+                                    ?
+                                    props.all_project.map(project =>
+                                        <li key={project.key}>
+                                            <span>{project.name}</span>
+                                            <Dropdown
+                                                overlay={
+                                                    <Menu>
+                                                        <Menu.Item>
+                                                            <EditOutlined />
+                                                            <span>Rename</span>
+                                                        </Menu.Item>
+                                                        <Menu.Item onClick={() => onDeleteHandle('projects', project.key)}>
+                                                            <DeleteOutlined />
+                                                            <span>Delete</span>
+                                                        </Menu.Item>
+                                                    </Menu>
+                                                }
+                                                trigger={['click']}>
+                                                <Button icon={<MoreOutlined />} />
+                                            </Dropdown>
+                                        </li>
+                                    )
+                                    :
+                                    <span>You don't have any project</span>
+                            }
+                        </ul>
                     </div>
                 </Collapse.Panel>
                 <Collapse.Panel header="Labels" key="labels" extra={genExtra('labels')}>
                     <div className="option-left-menu" style={{ fontWeight: 'normal' }}>
-                        abc
+                        <ul>
+                            {
+                                props.all_label
+                                    ?
+                                    props.all_label.map(label =>
+                                        <li key={label.key}>
+                                            <span>{label.name}</span>
+                                            <Dropdown
+                                                overlay={
+                                                    <Menu>
+                                                        <Menu.Item>
+                                                            <EditOutlined />
+                                                            <span>Rename</span>
+                                                        </Menu.Item>
+                                                        <Menu.Item onClick={() => onDeleteHandle('labels', label.key)}>
+                                                            <DeleteOutlined />
+                                                            <span>Delete</span>
+                                                        </Menu.Item>
+                                                    </Menu>
+                                                }
+                                                trigger={['click']}>
+                                                <Button icon={<MoreOutlined />} />
+                                            </Dropdown>
+                                        </li>
+                                    )
+                                    :
+                                    <span>You don't have any labels</span>
+                            }
+                        </ul>
                     </div>
                 </Collapse.Panel>
                 <Collapse.Panel header="Filters" key="filters" extra={genExtra('filters')}>
@@ -122,8 +181,7 @@ function LeftMenu(props) {
             <Modal
                 title={'Add ' + isShowModal}
                 visible={isShowModal ? true : false}
-                width={650}
-                style={{ top: 30 }}
+                width={500}
                 onCancel={onCancelHandle}
                 footer={
                     <>
@@ -142,14 +200,24 @@ function LeftMenu(props) {
 
 const mapStateToProps = (state) => {
     return {
-        show_menu: state.menuReducer.show_menu
+        show_menu: state.menuReducer.show_menu,
+        all_project: state.menuReducer.all_project,
+        all_label: state.menuReducer.all_label
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         saveCurrentProject: () => dispatch(actions.actions.saveCurrentProject()),
-        setDefaultProject: () => dispatch(actions.actions.setDefaultProject())
+        setDefaultProject: () => dispatch(actions.actions.setDefaultProject()),
+        saveCurrentLabel: () => dispatch(actions.actions.saveCurrentLabel()),
+        setDefaultLabel: () => dispatch(actions.actions.setDefaultLabel()),
+
+        getAllProject: () => dispatch(actions.actions.getAllProject()),
+        getAllLabel: () => dispatch(actions.actions.getAllLabel()),
+
+        deleteProject: (id) => dispatch(actions.actions.deleteProject(id)),
+        deleteLabel: (id) => dispatch(actions.actions.deleteLabel(id))
     }
 }
 

@@ -59,10 +59,10 @@ const api = {
     },
     
     deleteProject: (id) => {
-        firebase.ref('/projects/').child(id).remove().then(() => console.log('delete project success with key: ', id));
+        firebase.ref('/projects/').child(id).remove();
     },
     deleteLabels: (id) => {
-        firebase.ref('/labels/').child(id).remove().then(() => console.log('delete label success with key: ', id));
+        firebase.ref('/labels/').child(id).remove();
     },
     deleteFilters: (id) => {
         firebase.ref('/filters/').child(id).remove().then(() => console.log('delete filter success with key: ', id));
