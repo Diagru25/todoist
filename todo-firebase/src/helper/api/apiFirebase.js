@@ -55,18 +55,36 @@ const api = {
         return firebase.ref('/labels').push(entity);
     },
     addFilter: (entity) => {
-        firebase.ref('/filter').push(entity).then(key => console.log('add project success with key: ', key.key));
+        firebase.ref('/filter').push(entity);
     },
     
     deleteProject: (id) => {
         firebase.ref('/projects/').child(id).remove();
     },
-    deleteLabels: (id) => {
+    deleteLabel: (id) => {
         firebase.ref('/labels/').child(id).remove();
     },
-    deleteFilters: (id) => {
-        firebase.ref('/filters/').child(id).remove().then(() => console.log('delete filter success with key: ', id));
+    deleteFilter: (id) => {
+        firebase.ref('/filters/').child(id).remove();
     },
+    updateProject: (project) => {
+        let {key, ...cloneProject} = project;
+
+        const curUpdate = firebase.ref('/projects/').child(project.key);
+        curUpdate.set(cloneProject);
+    },
+    updateLabel: (label) => {
+        let {key, ...cloneLabel} = label;
+
+        const curUpdate = firebase.ref('/labels').child(label.key);
+        curUpdate.set(cloneLabel);
+    },
+    updateFilter: (filter) => {
+        let {key, ...cloneFilter} = filter;
+
+        const curUpdate = firebase.ref('/filters').child(filter.key);
+        curUpdate.set(cloneFilter);
+    }
 
 }
 

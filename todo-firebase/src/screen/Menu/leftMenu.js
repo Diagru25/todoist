@@ -67,15 +67,6 @@ function LeftMenu(props) {
         }
     }
 
-    const onDeleteHandle = (type, id) => {
-        if (type === 'projects')
-            props.deleteProject(id);
-        else if (type === 'labels')
-            props.deleteLabel(id);
-        else
-            return;
-    }
-
     return (
         <div className={props.show_menu ? "menu-wrapper" : "menu-wrapper hiddenn"}>
             <ul className="left-menu">
@@ -117,11 +108,11 @@ function LeftMenu(props) {
                                             <Dropdown
                                                 overlay={
                                                     <Menu>
-                                                        <Menu.Item>
+                                                        <Menu.Item onClick={() => {props.setCurrentProject(project); setIsShowModal('projects')}}>
                                                             <EditOutlined />
-                                                            <span>Rename</span>
+                                                            <span>Edit</span>
                                                         </Menu.Item>
-                                                        <Menu.Item onClick={() => onDeleteHandle('projects', project.key)}>
+                                                        <Menu.Item onClick={() => props.deleteProject(project.key)}>
                                                             <DeleteOutlined />
                                                             <span>Delete</span>
                                                         </Menu.Item>
@@ -150,11 +141,11 @@ function LeftMenu(props) {
                                             <Dropdown
                                                 overlay={
                                                     <Menu>
-                                                        <Menu.Item>
+                                                        <Menu.Item onClick={() => {props.setCurrentLabel(label); setIsShowModal('labels')}}>
                                                             <EditOutlined />
-                                                            <span>Rename</span>
+                                                            <span>Edit</span>
                                                         </Menu.Item>
-                                                        <Menu.Item onClick={() => onDeleteHandle('labels', label.key)}>
+                                                        <Menu.Item onClick={() => props.deleteLabel(label.key)}>
                                                             <DeleteOutlined />
                                                             <span>Delete</span>
                                                         </Menu.Item>
@@ -212,6 +203,8 @@ const mapDispatchToProps = (dispatch) => {
         setDefaultProject: () => dispatch(actions.actions.setDefaultProject()),
         saveCurrentLabel: () => dispatch(actions.actions.saveCurrentLabel()),
         setDefaultLabel: () => dispatch(actions.actions.setDefaultLabel()),
+        setCurrentProject: (project) => dispatch(actions.actions.setCurrentProject(project)),
+        setCurrentLabel: (label) => dispatch(actions.actions.setCurrentLabel(label)),
 
         getAllProject: () => dispatch(actions.actions.getAllProject()),
         getAllLabel: () => dispatch(actions.actions.getAllLabel()),

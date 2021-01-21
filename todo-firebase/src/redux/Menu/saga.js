@@ -1,4 +1,4 @@
-import {all, put, takeEvery, fork, select} from 'redux-saga/effects';
+import { all, put, takeEvery, fork, select } from 'redux-saga/effects';
 import actions from './actions';
 import api from '../../helper/api/apiFirebase';
 import { message } from "antd";
@@ -9,14 +9,25 @@ function* saga_saveProject() {
         let all_project = yield select(state => state.menuReducer.all_project);
         let entity = yield select(state => state.menuReducer.currentProject);
 
-        entity.key = yield api.addProject(entity).key;
-        all_project.push(entity);
-        
-        yield put(actions.actions.updateState({all_project}));
+        if (entity.key === null) {
+
+            entity.key = yield api.addProject(entity).key;
+            all_project.push(entity);
+
+            message.success('Add project success: ' + entity.key);
+        }
+        else {
+            yield api.updateProject(entity);
+
+            let foundIndex = all_project.findIndex(project => project.key === entity.key);
+            all_project[foundIndex] = entity
+
+            message.success('Edit project success: ' + entity.key);
+        }
 
         yield put(actions.actions.setDefaultProject());
+        yield put(actions.actions.updateState({ all_project }));
 
-        message.success('Add project success: ' + entity.key);
     }
     catch (ex) {
         console.log(ex);
@@ -28,13 +39,28 @@ function* saga_saveLabel() {
         let all_label = yield select(state => state.menuReducer.all_label);
         let entity = yield select(state => state.menuReducer.currentLabel);
 
-        entity.key = yield api.addLabel(entity).key;
-        all_label.push(entity);
+        if (entity.key === null) {
 
-        yield put(actions.actions.updateState({all_label}));
+            entity.key = yield api.addLabel(entity).key;
+            all_label.push(entity);
+
+            message.success('Add label success: ' + entity.key);
+            
+        }
+        else {
+
+            yield api.updateLabel(entity);
+
+            let foundIndex = all_label.findIndex(label => label.key === entity.key);
+            all_label[foundIndex] = entity
+
+            message.success('Edit label success: ' + entity.key);
+        }
+
         yield put(actions.actions.setDefaultLabel());
+        yield put(actions.actions.updateState({ all_label }));
+        
 
-        message.success('Add label success: ' + entity.key);
     }
     catch (ex) {
         console.log(ex);
@@ -50,12 +76,12 @@ function* saga_getAllProject() {
             let key = child.key;
             let project = child.val();
 
-            all_project.push({...project, key})
+            all_project.push({ ...project, key })
         })
 
-        yield put(actions.actions.updateState({all_project}));
+        yield put(actions.actions.updateState({ all_project }));
     }
-    catch(ex) {
+    catch (ex) {
         console.log(ex);
     }
 }
@@ -69,12 +95,12 @@ function* saga_getAllLabel() {
             let key = child.key;
             let label = child.val();
 
-            all_label.push({...label, key})
+            all_label.push({ ...label, key })
         })
 
-        yield put(actions.actions.updateState({all_label}));
+        yield put(actions.actions.updateState({ all_label }));
     }
-    catch(ex) {
+    catch (ex) {
         console.log(ex);
     }
 }
@@ -86,21 +112,21 @@ function* saga_deleteProject(action) {
         yield put(actions.actions.getAllProject());
 
         message.success("Delete project: " + action.payload.id);
-    }   
-    catch(ex) {
+    }
+    catch (ex) {
         console.log(ex)
     }
 }
 
 function* saga_deleteLabel(action) {
     try {
-        yield api.deleteLabels(action.payload.id);
+        yield api.deleteLabel(action.payload.id);
 
         yield put(actions.actions.getAllLabel());
 
         message.success("Delete label: " + action.payload.id);
-    }   
-    catch(ex) {
+    }
+    catch (ex) {
         console.log(ex)
     }
 }
