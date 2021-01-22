@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 import ModalProject from './Modal/project';
 import ModalLabel from './Modal/label';
+import ModalFilter from './Modal/filter';
 
 import actions from '../../redux/Menu/actions';
 
@@ -51,6 +52,10 @@ function LeftMenu(props) {
                 props.saveCurrentLabel();
                 break;
 
+            case 'filters':
+                props.saveCurrentFilter();
+                break;
+
             default: break;
         }
     }
@@ -62,6 +67,8 @@ function LeftMenu(props) {
                 return <ModalProject />
             case 'labels':
                 return <ModalLabel />
+            case 'filters':
+                return <ModalFilter />
             default:
                 return <div></div>
         }
@@ -199,18 +206,19 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        getAllProject: () => dispatch(actions.actions.getAllProject()),
         saveCurrentProject: () => dispatch(actions.actions.saveCurrentProject()),
         setDefaultProject: () => dispatch(actions.actions.setDefaultProject()),
+        setCurrentProject: (project) => dispatch(actions.actions.setCurrentProject(project)),
+        deleteProject: (id) => dispatch(actions.actions.deleteProject(id)),
+
+        getAllLabel: () => dispatch(actions.actions.getAllLabel()),
         saveCurrentLabel: () => dispatch(actions.actions.saveCurrentLabel()),
         setDefaultLabel: () => dispatch(actions.actions.setDefaultLabel()),
-        setCurrentProject: (project) => dispatch(actions.actions.setCurrentProject(project)),
         setCurrentLabel: (label) => dispatch(actions.actions.setCurrentLabel(label)),
+        deleteLabel: (id) => dispatch(actions.actions.deleteLabel(id)),
 
-        getAllProject: () => dispatch(actions.actions.getAllProject()),
-        getAllLabel: () => dispatch(actions.actions.getAllLabel()),
-
-        deleteProject: (id) => dispatch(actions.actions.deleteProject(id)),
-        deleteLabel: (id) => dispatch(actions.actions.deleteLabel(id))
+        saveCurrentFilter: () => dispatch(actions.actions.saveCurrentFilter())
     }
 }
 

@@ -1,4 +1,4 @@
-import { all, put, takeEvery, fork, select } from 'redux-saga/effects';
+import { all, put, takeEvery, fork, select, actionChannel } from 'redux-saga/effects';
 import actions from './actions';
 import api from '../../helper/api/apiFirebase';
 import { message } from "antd";
@@ -131,13 +131,45 @@ function* saga_deleteLabel(action) {
     }
 }
 
+function* saga_saveFilter() {
+    try{
+        let entity = yield select(state => state.menuReducer.currentFilter);
+        let all_filter = yield select(state => state.menuReducer.all_filter);
+
+        if(entity.key === null) {
+            
+            entity.key = yield api.addFilter(entity).key;
+            all_filter.push(entity);
+
+            message.success('Add filter success: ' + entity.key);
+        }
+        else {
+            yield api.updateFilter(entity);
+
+            let foundIndex = all_filter.findIndex(filter => filter.key === entity.key);
+            all_filter[foundIndex] = entity;
+
+            message.success('Update Filter success: ' + entity.key);
+        }
+
+        yield put(actions.actions.setDefaultFilter());
+        yield put(actions.actions.updateState({all_filter}));
+    }
+    catch (ex) {
+        console.log(ex);
+    }
+}
+
 function* listen() {
     yield takeEvery(actions.types.SAVE_CURRENT_PROJECT, saga_saveProject)
-    yield takeEvery(actions.types.SAVE_CURRENT_LABEL, saga_saveLabel)
     yield takeEvery(actions.types.GET_ALL_PROJECT, saga_getAllProject)
-    yield takeEvery(actions.types.GET_ALL_LABEL, saga_getAllLabel)
     yield takeEvery(actions.types.DELETE_PROJECT, saga_deleteProject)
+    
+    yield takeEvery(actions.types.SAVE_CURRENT_LABEL, saga_saveLabel)
+    yield takeEvery(actions.types.GET_ALL_LABEL, saga_getAllLabel)
     yield takeEvery(actions.types.DELETE_LABEL, saga_deleteLabel)
+    
+    yield takeEvery(actions.types.SAVE_CURRENT_FILTER, saga_saveFilter)
 }
 
 export default function* menuSaga() {

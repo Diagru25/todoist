@@ -12,15 +12,24 @@ const defaultLabel = {
     description: ''
 }
 
+const defaultFilter = {
+    key: null,
+    name: '',
+    description: '',
+    color: ''
+}
+
 const initialState = {
     show_menu: true,
     show_setting_menu: false,
 
     all_project: [],
     all_label: [],
+    all_filter: [],
 
     currentProject: defaultProject,
     currentLabel: defaultLabel,
+    currentFilter: defaultFilter
 };
 
 const reducer = (state = initialState, action) => {
@@ -69,9 +78,6 @@ const reducer = (state = initialState, action) => {
                 }
             }
 
-        case actions.types.SAVE_CURRENT_PROJECT:
-            return {...state}
-
         case actions.types.SET_DEFAULT_LABEL:
             return {
                 ...state,
@@ -99,8 +105,36 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case actions.types.DELETE_PROJECT: 
-            return state
+
+        case actions.types.SET_DEFAULT_FILTER: {
+            return {
+                ...state,
+                ...{
+                    currentFilter: defaultFilter
+                }
+            }
+        }
+
+        case actions.types.SET_CURRENT_FILTER: {
+            return {
+                ...state,
+                ...{
+                    currentFilter: action.payload.filter
+                }
+            }
+        }
+
+        case actions.types.UPDATE_CURRENT_FILTER: {
+            return {
+                ...state,
+                ...{
+                    currentFilter: {
+                        ...state.currentFilter,
+                        ...action.payload.filter
+                    }
+                }
+            }
+        }
 
         case actions.types.SAVE_CURRENT_LABEL:
             return {...state}

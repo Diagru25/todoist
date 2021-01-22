@@ -55,7 +55,7 @@ const api = {
         return firebase.ref('/labels').push(entity);
     },
     addFilter: (entity) => {
-        firebase.ref('/filter').push(entity);
+        return firebase.ref('/filter').push(entity);
     },
     
     deleteProject: (id) => {
