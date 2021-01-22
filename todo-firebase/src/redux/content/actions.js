@@ -4,7 +4,7 @@ const types = {
     GET_TASKS_INBOX: 'GET_TASKS_INBOX',
     GET_TASKS_INBOX_SUCCESS: 'GET_TASKS_INBOX_SUCCESS',
 
-    // CO THE KHONG CAN
+    // they perhaps don't use
     ADD_TASK_INBOX: 'ADD_TASK_INBOX',
     ADD_TASK_TODAY: 'ADD_TASK_TODAY',
     ADD_TASK_UPCOMING: 'ADD_TASK_UPCOMING',
@@ -107,7 +107,7 @@ const actions = {
         }
     }
 }
-
+/* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
 export default {
     types, actions
 }

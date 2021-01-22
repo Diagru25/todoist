@@ -1,4 +1,4 @@
-import { all, put, takeEvery, fork, select, actionChannel } from 'redux-saga/effects';
+import { all, put, takeEvery, fork, select } from 'redux-saga/effects';
 import actions from './actions';
 import api from '../../helper/api/apiFirebase';
 import { message } from "antd";
@@ -168,7 +168,7 @@ function* listen() {
     yield takeEvery(actions.types.SAVE_CURRENT_LABEL, saga_saveLabel)
     yield takeEvery(actions.types.GET_ALL_LABEL, saga_getAllLabel)
     yield takeEvery(actions.types.DELETE_LABEL, saga_deleteLabel)
-    
+
     yield takeEvery(actions.types.SAVE_CURRENT_FILTER, saga_saveFilter)
 }
 
