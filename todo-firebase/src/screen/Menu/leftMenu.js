@@ -22,6 +22,7 @@ function LeftMenu(props) {
     useEffect(() => {
         props.getAllProject();
         props.getAllLabel();
+        props.getAllFilter();
     }, [])
 
     const genExtra = (extraName) => (
@@ -37,6 +38,7 @@ function LeftMenu(props) {
     const onCancelHandle = () => {
         props.setDefaultProject();
         props.setDefaultLabel();
+        props.setDefaultFilter();
         setIsShowModal('');
     }
 
@@ -107,7 +109,7 @@ function LeftMenu(props) {
                     <div className="option-left-menu">
                         <ul>
                             {
-                                props.all_project
+                                props.all_project.length !== 0
                                     ?
                                     props.all_project.map(project =>
                                         <li key={project.key}>
@@ -115,7 +117,7 @@ function LeftMenu(props) {
                                             <Dropdown
                                                 overlay={
                                                     <Menu>
-                                                        <Menu.Item onClick={() => {props.setCurrentProject(project); setIsShowModal('projects')}}>
+                                                        <Menu.Item onClick={() => { props.setCurrentProject(project); setIsShowModal('projects') }}>
                                                             <EditOutlined />
                                                             <span>Edit</span>
                                                         </Menu.Item>
@@ -140,7 +142,7 @@ function LeftMenu(props) {
                     <div className="option-left-menu" style={{ fontWeight: 'normal' }}>
                         <ul>
                             {
-                                props.all_label
+                                props.all_label.length !== 0
                                     ?
                                     props.all_label.map(label =>
                                         <li key={label.key}>
@@ -148,7 +150,7 @@ function LeftMenu(props) {
                                             <Dropdown
                                                 overlay={
                                                     <Menu>
-                                                        <Menu.Item onClick={() => {props.setCurrentLabel(label); setIsShowModal('labels')}}>
+                                                        <Menu.Item onClick={() => { props.setCurrentLabel(label); setIsShowModal('labels') }}>
                                                             <EditOutlined />
                                                             <span>Edit</span>
                                                         </Menu.Item>
@@ -169,9 +171,37 @@ function LeftMenu(props) {
                         </ul>
                     </div>
                 </Collapse.Panel>
-                <Collapse.Panel header="Filters" key="filters" extra={genExtra('filters')}>
+                <Collapse.Panel header="Filters (Priority)" key="filters" extra={genExtra('filters')}>
                     <div className="option-left-menu" style={{ fontWeight: 'normal' }}>
-                        abc
+                        <ul>
+                            {
+                                props.all_filter.length !== 0
+                                    ?
+                                    props.all_filter.map(filter =>
+                                        <li key={filter.key}>
+                                            <span style={{color: filter.color}}>{filter.name}</span>
+                                            <Dropdown
+                                                overlay={
+                                                    <Menu>
+                                                        <Menu.Item onClick={() => { props.setCurrentFilter(filter); setIsShowModal('filters') }}>
+                                                            <EditOutlined />
+                                                            <span>Edit</span>
+                                                        </Menu.Item>
+                                                        <Menu.Item onClick={() => props.deleteFilter(filter.key)}>
+                                                            <DeleteOutlined />
+                                                            <span>Delete</span>
+                                                        </Menu.Item>
+                                                    </Menu>
+                                                }
+                                                trigger={['click']}>
+                                                <Button icon={<MoreOutlined />} />
+                                            </Dropdown>
+                                        </li>
+                                    )
+                                    :
+                                    <span>You don't have any filters</span>
+                            }
+                        </ul>
                     </div>
                 </Collapse.Panel>
             </Collapse>
@@ -179,7 +209,7 @@ function LeftMenu(props) {
             <Modal
                 title={'Add ' + isShowModal}
                 visible={isShowModal ? true : false}
-                width={500}
+                width={400}
                 onCancel={onCancelHandle}
                 footer={
                     <>
@@ -200,7 +230,8 @@ const mapStateToProps = (state) => {
     return {
         show_menu: state.menuReducer.show_menu,
         all_project: state.menuReducer.all_project,
-        all_label: state.menuReducer.all_label
+        all_label: state.menuReducer.all_label,
+        all_filter: state.menuReducer.all_filter
     }
 }
 
@@ -218,7 +249,11 @@ const mapDispatchToProps = (dispatch) => {
         setCurrentLabel: (label) => dispatch(actions.actions.setCurrentLabel(label)),
         deleteLabel: (id) => dispatch(actions.actions.deleteLabel(id)),
 
-        saveCurrentFilter: () => dispatch(actions.actions.saveCurrentFilter())
+        getAllFilter: () => dispatch(actions.actions.getAllFilter()),
+        saveCurrentFilter: () => dispatch(actions.actions.saveCurrentFilter()),
+        setDefaultFilter: () => dispatch(actions.actions.setDefaultFilter()),
+        setCurrentFilter: (filter) => dispatch(actions.actions.setCurrentFilter(filter)),
+        deleteFilter: (id) => dispatch(actions.actions.deleteFilter(id))
     }
 }
 
